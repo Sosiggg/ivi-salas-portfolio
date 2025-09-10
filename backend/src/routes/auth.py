@@ -5,11 +5,13 @@ from ..utils.database import get_db
 from ..models.user import User
 from ..utils.security import verify_password, hash_password, create_access_token, create_refresh_token
 from ..schemas.auth import RegisterRequest, LoginRequest, RefreshRequest, TokenResponse, UserRead
+from ..utils.limiter import limiter
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
 @router.post('/register', response_model=UserRead, status_code=201)
+@limiter.limit("5/minute")
 def register(data: RegisterRequest, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.email == data.email).first()
     if existing:
@@ -21,6 +23,7 @@ def register(data: RegisterRequest, db: Session = Depends(get_db)):
     return UserRead(id=user.id, email=user.email, full_name=user.full_name)
 
 @router.post('/login', response_model=TokenResponse)
+@limiter.limit("10/minute")
 def login(data: LoginRequest, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == data.email).first()
     if not user or not verify_password(data.password, user.hashed_password):
@@ -31,6 +34,7 @@ def login(data: LoginRequest, db: Session = Depends(get_db)):
 
 
 @router.post('/refresh', response_model=TokenResponse)
+@limiter.limit("20/minute")
 def refresh_token(data: RefreshRequest):
     from jose import jwt, JWTError
     from ..utils.config import settings

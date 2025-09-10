@@ -4,10 +4,12 @@ from ..utils.database import get_db
 from ..models.project import Project
 from ..utils.security import get_current_user_id
 from ..schemas.project import ProjectCreate, ProjectRead, ProjectList
+from ..utils.limiter import limiter
 
 router = APIRouter(prefix="/projects", tags=["projects"])
 
 @router.get('/', response_model=ProjectList)
+@limiter.limit("60/minute")
 def list_projects(
     db: Session = Depends(get_db),
     skip: int = 0,
