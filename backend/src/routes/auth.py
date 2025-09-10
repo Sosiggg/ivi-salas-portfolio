@@ -55,6 +55,7 @@ def refresh_token(data: RefreshRequest):
         if payload.get("type") != "refresh":
             raise HTTPException(status_code=400, detail="Invalid token type")
         new_access = create_access_token(payload["sub"])
-    return TokenResponse(access_token=new_access)
+        new_refresh = create_refresh_token(payload["sub"])  # rotate
+        return TokenResponse(access_token=new_access, refresh_token=new_refresh)
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid or expired refresh token")
