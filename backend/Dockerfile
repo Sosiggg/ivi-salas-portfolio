@@ -34,6 +34,5 @@ ENV PORT=5000 \
 # Simple health check (optional) - FastAPI /api/health endpoint
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD python -c "import urllib.request,sys;\n\n\n\n\nimport os;\nurl=f'http://127.0.0.1:{os.environ.get(\"PORT\",5000)}/api/health';\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntry: urllib.request.urlopen(url);\nexcept Exception as e: sys.exit(1)" || exit 1
 
-# Start the server
-# (Gunicorn could be added later; using Uvicorn directly for now.)
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "5000"]
+# Start the server (production style via Gunicorn + Uvicorn worker)
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "src.main:app", "-b", "0.0.0.0:5000", "--workers", "3", "--timeout", "60"]
