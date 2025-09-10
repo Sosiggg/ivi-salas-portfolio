@@ -6,6 +6,7 @@ from slowapi import _rate_limit_exceeded_handler
 from fastapi.middleware.cors import CORSMiddleware
 from .utils.config import settings
 from .utils.limiter import limiter
+from .middleware.security_headers import SecurityHeadersMiddleware
 from .utils.database import engine
 from .models import base  # noqa: F401
 from .routes import auth, projects, contact, skills, certificates, experiences, education
@@ -16,6 +17,7 @@ app = FastAPI(title="Portfolio API", version="0.1.0")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
+app.add_middleware(SecurityHeadersMiddleware)
 
 app.add_middleware(
     CORSMiddleware,

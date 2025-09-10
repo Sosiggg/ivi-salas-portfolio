@@ -33,3 +33,14 @@ def delete_certificate(certificate_id: int, db: Session = Depends(get_db), user_
     db.delete(cert)
     db.commit()
     return None
+
+@router.patch('/{certificate_id}', response_model=CertificateRead)
+def update_certificate(certificate_id: int, data: CertificateCreate, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+    cert = db.get(Certificate, certificate_id)
+    if not cert:
+        raise HTTPException(status_code=404, detail="Certificate not found")
+    for field, value in data.model_dump(exclude_unset=True).items():
+        setattr(cert, field, value)
+    db.commit()
+    db.refresh(cert)
+    return cert

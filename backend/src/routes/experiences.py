@@ -33,3 +33,14 @@ def delete_experience(experience_id: int, db: Session = Depends(get_db), user_id
     db.delete(exp)
     db.commit()
     return None
+
+@router.patch('/{experience_id}', response_model=ExperienceRead)
+def update_experience(experience_id: int, data: ExperienceCreate, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+    exp = db.get(Experience, experience_id)
+    if not exp:
+        raise HTTPException(status_code=404, detail="Experience not found")
+    for field, value in data.model_dump(exclude_unset=True).items():
+        setattr(exp, field, value)
+    db.commit()
+    db.refresh(exp)
+    return exp

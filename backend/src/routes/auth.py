@@ -3,7 +3,15 @@ from pydantic import EmailStr
 from sqlalchemy.orm import Session
 from ..utils.database import get_db
 from ..models.user import User
-from ..utils.security import verify_password, hash_password, create_access_token, create_refresh_token
+from ..utils.security import (
+    verify_password,
+    hash_password,
+    create_access_token,
+    create_refresh_token,
+    record_login_failure,
+    check_login_allowed,
+    clear_login_failures,
+)
 from ..schemas.auth import RegisterRequest, LoginRequest, RefreshRequest, TokenResponse, UserRead
 from ..utils.limiter import limiter
 
@@ -25,9 +33,13 @@ def register(data: RegisterRequest, db: Session = Depends(get_db)):
 @router.post('/login', response_model=TokenResponse)
 @limiter.limit("10/minute")
 def login(data: LoginRequest, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == data.email).first()
+    identifier = data.email.lower()
+    check_login_allowed(identifier)
+    user = db.query(User).filter(User.email == identifier).first()
     if not user or not verify_password(data.password, user.hashed_password):
+        record_login_failure(identifier)
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+    clear_login_failures(identifier)
     access = create_access_token(str(user.id))
     refresh = create_refresh_token(str(user.id))
     return TokenResponse(access_token=access, refresh_token=refresh)

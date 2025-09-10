@@ -33,3 +33,14 @@ def delete_skill(skill_id: int, db: Session = Depends(get_db), user_id: str = De
     db.delete(skill)
     db.commit()
     return None
+
+@router.patch('/{skill_id}', response_model=SkillRead)
+def update_skill(skill_id: int, data: SkillCreate, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+    skill = db.get(Skill, skill_id)
+    if not skill:
+        raise HTTPException(status_code=404, detail="Skill not found")
+    for field, value in data.model_dump(exclude_unset=True).items():
+        setattr(skill, field, value)
+    db.commit()
+    db.refresh(skill)
+    return skill

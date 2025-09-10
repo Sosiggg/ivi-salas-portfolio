@@ -33,3 +33,14 @@ def delete_education(education_id: int, db: Session = Depends(get_db), user_id: 
     db.delete(edu)
     db.commit()
     return None
+
+@router.patch('/{education_id}', response_model=EducationRead)
+def update_education(education_id: int, data: EducationCreate, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+    edu = db.get(Education, education_id)
+    if not edu:
+        raise HTTPException(status_code=404, detail="Education not found")
+    for field, value in data.model_dump(exclude_unset=True).items():
+        setattr(edu, field, value)
+    db.commit()
+    db.refresh(edu)
+    return edu

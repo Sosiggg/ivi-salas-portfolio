@@ -43,3 +43,14 @@ def delete_project(project_id: int, db: Session = Depends(get_db), user_id: str 
     db.delete(project)
     db.commit()
     return None
+
+@router.patch('/{project_id}', response_model=ProjectRead)
+def update_project(project_id: int, data: ProjectCreate, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+    project = db.get(Project, project_id)
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    for field, value in data.model_dump(exclude_unset=True).items():
+        setattr(project, field, value)
+    db.commit()
+    db.refresh(project)
+    return project
