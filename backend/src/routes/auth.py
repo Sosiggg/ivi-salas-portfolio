@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import EmailStr
 from sqlalchemy.orm import Session
 from ..utils.database import get_db
+import re
 from ..models.user import User
 from ..utils.security import (
     verify_password,
@@ -24,6 +25,10 @@ def register(data: RegisterRequest, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.email == data.email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
+    # Basic password policy: min 8 chars, upper, lower, digit, symbol
+    pwd = data.password
+    if not (len(pwd) >= 8 and re.search(r"[A-Z]", pwd) and re.search(r"[a-z]", pwd) and re.search(r"\d", pwd) and re.search(r"[^A-Za-z0-9]", pwd)):
+        raise HTTPException(status_code=400, detail="Password must be 8+ chars incl upper, lower, digit, symbol")
     user = User(email=data.email, hashed_password=hash_password(data.password), full_name=data.full_name)
     db.add(user)
     db.commit()

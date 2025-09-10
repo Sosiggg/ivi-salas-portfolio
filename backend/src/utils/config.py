@@ -2,7 +2,8 @@ from pydantic import Field
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    database_url: str = Field(..., alias="DATABASE_URL")
+    # Provide a safe sqlite fallback for local/dev if DATABASE_URL not set
+    database_url: str = Field("sqlite:///./dev.db", alias="DATABASE_URL")
     jwt_secret: str = Field(..., alias="JWT_SECRET")
     jwt_expires_in: str = Field("1h", alias="JWT_EXPIRES_IN")
     refresh_token_expires_in: str = Field("7d", alias="REFRESH_TOKEN_EXPIRES_IN")
