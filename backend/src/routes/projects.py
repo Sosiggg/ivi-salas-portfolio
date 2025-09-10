@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi import APIRouter, Depends, HTTPException, status, Query, Request
 from sqlalchemy.orm import Session
 from ..utils.database import get_db
 from ..models.project import Project
@@ -11,6 +11,7 @@ router = APIRouter(prefix="/projects", tags=["projects"])
 @router.get('/', response_model=ProjectList)
 @limiter.limit("60/minute")
 def list_projects(
+    request: Request,
     db: Session = Depends(get_db),
     skip: int = 0,
     limit: int = Query(50, le=100),

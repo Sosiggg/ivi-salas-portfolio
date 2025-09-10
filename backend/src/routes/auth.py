@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from pydantic import EmailStr
 from sqlalchemy.orm import Session
 from ..utils.database import get_db
@@ -21,7 +21,7 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post('/register', response_model=UserRead, status_code=201)
 @limiter.limit("5/minute")
-def register(data: RegisterRequest, db: Session = Depends(get_db)):
+def register(request: Request, data: RegisterRequest, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.email == data.email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
@@ -37,7 +37,7 @@ def register(data: RegisterRequest, db: Session = Depends(get_db)):
 
 @router.post('/login', response_model=TokenResponse)
 @limiter.limit("10/minute")
-def login(data: LoginRequest, db: Session = Depends(get_db)):
+def login(request: Request, data: LoginRequest, db: Session = Depends(get_db)):
     identifier = data.email.lower()
     check_login_allowed(identifier)
     user = db.query(User).filter(User.email == identifier).first()
@@ -52,7 +52,7 @@ def login(data: LoginRequest, db: Session = Depends(get_db)):
 
 @router.post('/refresh', response_model=TokenResponse)
 @limiter.limit("20/minute")
-def refresh_token(data: RefreshRequest):
+def refresh_token(request: Request, data: RefreshRequest):
     from jose import jwt, JWTError
     from ..utils.config import settings
     try:

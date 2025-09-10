@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy.orm import Session
 from ..utils.database import get_db
@@ -17,7 +17,7 @@ class ContactRequest(BaseModel):
 
 @router.post('/', status_code=201)
 @limiter.limit("5/minute")
-def submit_message(data: ContactRequest, db: Session = Depends(get_db)):
+def submit_message(request: Request, data: ContactRequest, db: Session = Depends(get_db)):
     item = ContactMessage(**data.model_dump())
     db.add(item)
     db.commit()
