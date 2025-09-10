@@ -1,33 +1,32 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
-from pydantic import BaseModel
 from ..utils.database import get_db
 from ..models.project import Project
 from ..utils.security import get_current_user_id
+from ..schemas.project import ProjectCreate, ProjectRead, ProjectList
 
 router = APIRouter(prefix="/projects", tags=["projects"])
 
-class ProjectCreate(BaseModel):
-    title: str
-    description: str
-    tech_stack: str
-    repo_url: str | None = None
-    demo_url: str | None = None
-    image_url: str | None = None
+@router.get('/', response_model=ProjectList)
+def list_projects(
+    db: Session = Depends(get_db),
+    skip: int = 0,
+    limit: int = Query(50, le=100),
+):
+    query = db.query(Project).order_by(Project.created_at.desc())
+    total = query.count()
+    items = query.offset(skip).limit(limit).all()
+    return {"items": items, "total": total}
 
-@router.get('/')
-def list_projects(db: Session = Depends(get_db)):
-    return db.query(Project).order_by(Project.created_at.desc()).all()
-
-@router.post('/', status_code=status.HTTP_201_CREATED)
+@router.post('/', status_code=status.HTTP_201_CREATED, response_model=ProjectRead)
 def create_project(data: ProjectCreate, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
-    project = Project(**data.model_dump())  # optionally associate owner later
+    project = Project(**data.model_dump())
     db.add(project)
     db.commit()
     db.refresh(project)
     return project
 
-@router.get('/{project_id}')
+@router.get('/{project_id}', response_model=ProjectRead)
 def get_project(project_id: int, db: Session = Depends(get_db)):
     project = db.get(Project, project_id)
     if not project:
