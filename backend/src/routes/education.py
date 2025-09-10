@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from ..utils.database import get_db
 from ..models.education import Education
 from ..schemas.education import EducationCreate, EducationRead, EducationList
-from ..utils.security import get_current_user_id
+from ..utils.security import get_current_user_id, require_admin
 
 router = APIRouter(prefix="/education", tags=["education"])
 
@@ -17,7 +17,7 @@ def list_education(db: Session = Depends(get_db), skip: int = 0, limit: int = Qu
 
 
 @router.post('/', response_model=EducationRead, status_code=status.HTTP_201_CREATED)
-def create_education(data: EducationCreate, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+def create_education(data: EducationCreate, db: Session = Depends(get_db), admin=Depends(require_admin)):
     edu = Education(**data.model_dump())
     db.add(edu)
     db.commit()
@@ -26,7 +26,7 @@ def create_education(data: EducationCreate, db: Session = Depends(get_db), user_
 
 
 @router.delete('/{education_id}', status_code=status.HTTP_204_NO_CONTENT)
-def delete_education(education_id: int, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+def delete_education(education_id: int, db: Session = Depends(get_db), admin=Depends(require_admin)):
     edu = db.get(Education, education_id)
     if not edu:
         raise HTTPException(status_code=404, detail="Education not found")
@@ -35,7 +35,7 @@ def delete_education(education_id: int, db: Session = Depends(get_db), user_id: 
     return None
 
 @router.patch('/{education_id}', response_model=EducationRead)
-def update_education(education_id: int, data: EducationCreate, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+def update_education(education_id: int, data: EducationCreate, db: Session = Depends(get_db), admin=Depends(require_admin)):
     edu = db.get(Education, education_id)
     if not edu:
         raise HTTPException(status_code=404, detail="Education not found")

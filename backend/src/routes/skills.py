@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from ..utils.database import get_db
 from ..models.skill import Skill
 from ..schemas.skill import SkillCreate, SkillRead, SkillList
-from ..utils.security import get_current_user_id
+from ..utils.security import get_current_user_id, require_admin
 
 router = APIRouter(prefix="/skills", tags=["skills"])
 
@@ -17,7 +17,7 @@ def list_skills(db: Session = Depends(get_db), skip: int = 0, limit: int = Query
 
 
 @router.post('/', response_model=SkillRead, status_code=status.HTTP_201_CREATED)
-def create_skill(data: SkillCreate, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+def create_skill(data: SkillCreate, db: Session = Depends(get_db), admin=Depends(require_admin)):
     skill = Skill(**data.model_dump())
     db.add(skill)
     db.commit()
@@ -26,7 +26,7 @@ def create_skill(data: SkillCreate, db: Session = Depends(get_db), user_id: str 
 
 
 @router.delete('/{skill_id}', status_code=status.HTTP_204_NO_CONTENT)
-def delete_skill(skill_id: int, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+def delete_skill(skill_id: int, db: Session = Depends(get_db), admin=Depends(require_admin)):
     skill = db.get(Skill, skill_id)
     if not skill:
         raise HTTPException(status_code=404, detail="Skill not found")
@@ -35,7 +35,7 @@ def delete_skill(skill_id: int, db: Session = Depends(get_db), user_id: str = De
     return None
 
 @router.patch('/{skill_id}', response_model=SkillRead)
-def update_skill(skill_id: int, data: SkillCreate, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+def update_skill(skill_id: int, data: SkillCreate, db: Session = Depends(get_db), admin=Depends(require_admin)):
     skill = db.get(Skill, skill_id)
     if not skill:
         raise HTTPException(status_code=404, detail="Skill not found")

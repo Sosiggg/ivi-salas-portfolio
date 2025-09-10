@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from ..utils.database import get_db
 from ..models.project import Project
-from ..utils.security import get_current_user_id
+from ..utils.security import get_current_user_id, require_admin
 from ..schemas.project import ProjectCreate, ProjectRead, ProjectList
 from ..utils.limiter import limiter
 
@@ -21,7 +21,7 @@ def list_projects(
     return {"items": items, "total": total}
 
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=ProjectRead)
-def create_project(data: ProjectCreate, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+def create_project(data: ProjectCreate, db: Session = Depends(get_db), admin=Depends(require_admin)):
     project = Project(**data.model_dump())
     db.add(project)
     db.commit()
@@ -36,7 +36,7 @@ def get_project(project_id: int, db: Session = Depends(get_db)):
     return project
 
 @router.delete('/{project_id}', status_code=status.HTTP_204_NO_CONTENT)
-def delete_project(project_id: int, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+def delete_project(project_id: int, db: Session = Depends(get_db), admin=Depends(require_admin)):
     project = db.get(Project, project_id)
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
@@ -45,7 +45,7 @@ def delete_project(project_id: int, db: Session = Depends(get_db), user_id: str 
     return None
 
 @router.patch('/{project_id}', response_model=ProjectRead)
-def update_project(project_id: int, data: ProjectCreate, db: Session = Depends(get_db), user_id: str = Depends(get_current_user_id)):
+def update_project(project_id: int, data: ProjectCreate, db: Session = Depends(get_db), admin=Depends(require_admin)):
     project = db.get(Project, project_id)
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
