@@ -23,11 +23,10 @@ yarn-error.log*
 .env.*
 !.env.example
 
-# Database & migrations
+# Database
 *.sqlite
 *.db
 *.sql
-migrations/
 
 # IDE / editor stuff
 .vscode/
