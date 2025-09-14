@@ -33,3 +33,38 @@ yarn-error.log*
 .idea/
 .DS_Store
 *.swp
+
+# Python coverage / test artifacts
+.coverage
+coverage/
+htmlcov/
+pytest_cache/
+
+# Distribution / packaging
+*.egg-info/
+pip-wheel-metadata/
+
+# Local scripts outputs / temp
+tmp/
+**/temp/
+
+# Node build caches
+.turbo/
+.parcel-cache/
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# Tailwind / PostCSS cache
+.cache/
+
+# Local environment overrides
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# SQLite busy write-ahead logs
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
