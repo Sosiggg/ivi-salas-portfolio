@@ -12,7 +12,8 @@ alembic upgrade head || { echo "[entrypoint] Alembic migration failed" >&2; exit
 ###############################################################################
 # Ensure admin user (idempotent) if BOOTSTRAP_ADMIN=true and creds provided   #
 ###############################################################################
-if [ "${BOOTSTRAP_ADMIN,,}" = "true" ]; then
+LOWER_FLAG="$(printf '%s' "${BOOTSTRAP_ADMIN}" | tr 'A-Z' 'a-z')"
+if [ "$LOWER_FLAG" = "true" ]; then
   echo "[entrypoint] Ensuring admin user exists..."
   python - <<'PY'
 import os
