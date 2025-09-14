@@ -10,7 +10,7 @@ from .utils.limiter import limiter
 from .middleware.security_headers import SecurityHeadersMiddleware
 from .utils.database import engine
 from .models import base  # noqa: F401
-from .routes import auth, projects, contact, skills, certificates, experiences, education, users
+from .routes import auth, projects, contact, skills, certificates, experiences, education, users, admin
 
 app = FastAPI(title="Portfolio API", version="0.1.0")
 
@@ -39,6 +39,7 @@ app.include_router(certificates.router, prefix="/api")
 app.include_router(experiences.router, prefix="/api")
 app.include_router(education.router, prefix="/api")
 app.include_router(users.router, prefix="/api")
+app.include_router(admin.router, prefix="/api")
 
 @app.get('/api/health')
 def health():

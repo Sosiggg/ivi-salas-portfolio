@@ -19,16 +19,40 @@ from ..utils.limiter import limiter
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
+PASSWORD_POLICY = {
+    "min_length": 12,
+    "require_upper": True,
+    "require_lower": True,
+    "require_digit": True,
+    "require_symbol": True,
+}
+
+def _validate_password_strength(pwd: str):
+    if len(pwd) < PASSWORD_POLICY["min_length"]:
+        return False
+    if PASSWORD_POLICY["require_upper"] and not re.search(r"[A-Z]", pwd):
+        return False
+    if PASSWORD_POLICY["require_lower"] and not re.search(r"[a-z]", pwd):
+        return False
+    if PASSWORD_POLICY["require_digit"] and not re.search(r"\d", pwd):
+        return False
+    if PASSWORD_POLICY["require_symbol"] and not re.search(r"[^A-Za-z0-9]", pwd):
+        return False
+    return True
+
 @router.post('/register', response_model=UserRead, status_code=201)
 @limiter.limit("5/minute")
 def register(request: Request, data: RegisterRequest, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.email == data.email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
-    # Basic password policy: min 8 chars, upper, lower, digit, symbol
-    pwd = data.password
-    if not (len(pwd) >= 8 and re.search(r"[A-Z]", pwd) and re.search(r"[a-z]", pwd) and re.search(r"\d", pwd) and re.search(r"[^A-Za-z0-9]", pwd)):
-        raise HTTPException(status_code=400, detail="Password must be 8+ chars incl upper, lower, digit, symbol")
+    if not _validate_password_strength(data.password):
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "Password must be >=12 chars and include upper, lower, digit, and symbol"
+            ),
+        )
     user = User(email=data.email, hashed_password=hash_password(data.password), full_name=data.full_name)
     db.add(user)
     db.commit()
