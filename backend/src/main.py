@@ -14,6 +14,7 @@ from .utils.database import engine
 from .models import base  # noqa: F401
 from .routes import auth, projects, contact, skills, certificates, experiences, education, users, admin, admin_portal
 from .utils.security import require_admin
+from .utils.config import settings as app_settings
 
 app = FastAPI(
     title="Portfolio API",
@@ -58,6 +59,35 @@ def health():
 @app.get('/')
 def root():
     return {"message": "Portfolio API. Admin docs at /admin/docs (auth required)."}
+
+@app.get('/_diag', include_in_schema=False)
+def diagnostic_probe():
+    if not app_settings.diag_enabled:
+        # Mimic not found to avoid hinting existence in production
+        raise HTTPException(status_code=404, detail="Not found")
+    # Return minimal safe diagnostics (never secrets)
+    db_url = app_settings.database_url
+    redacted_db = None
+    if db_url:
+        # Strip credentials if present
+        # e.g. postgresql+psycopg://user:pass@host:5432/db -> postgresql+psycopg://***@host:5432/db
+        try:
+            prefix, rest = db_url.split('://', 1)
+            if '@' in rest and ':' in rest.split('@',1)[0]:
+                creds, hostpart = rest.split('@',1)
+                redacted_db = f"{prefix}://***@{hostpart}"
+            else:
+                redacted_db = db_url
+        except ValueError:
+            redacted_db = db_url
+    return {
+        "ok": True,
+        "has_jwt_secret": bool(app_settings.jwt_secret),
+        "db_url": redacted_db,
+        "cors_origin": app_settings.cors_origin,
+        "node_env": app_settings.node_env,
+        "diag_enabled": app_settings.diag_enabled,
+    }
 
 SWAGGER_HTML = """<!DOCTYPE html>
 <html>

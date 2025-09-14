@@ -1,4 +1,4 @@
-from pydantic import Field
+from pydantic import Field, ValidationError
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
@@ -10,9 +10,26 @@ class Settings(BaseSettings):
     port: int = Field(5000, alias="PORT")
     node_env: str = Field("development", alias="NODE_ENV")
     cors_origin: str = Field("http://localhost:3000", alias="CORS_ORIGIN")
+    diag_enabled: bool = Field(False, alias="DIAG_ENABLED")
 
     class Config:
         env_file = ".env"
         case_sensitive = True
 
-settings = Settings()  # type: ignore
+try:
+    settings = Settings()  # type: ignore
+except ValidationError as e:  # pragma: no cover - startup failure path
+    # Provide a clearer runtime error specifically listing missing required env vars
+    missing = []
+    for err in e.errors():
+        if err.get("type") == "missing":
+            # err['loc'] is a tuple like ('JWT_SECRET',)
+            loc = err.get("loc")
+            if loc:
+                missing.append(str(loc[0]))
+    if missing:
+        detail = ", ".join(sorted(set(missing)))
+        raise RuntimeError(
+            f"Missing required environment variable(s): {detail}. Set them in your hosting provider's env settings and redeploy."  # noqa: E501
+        ) from e
+    raise
