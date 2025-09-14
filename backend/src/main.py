@@ -1,7 +1,8 @@
 import uvicorn
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.responses import RedirectResponse, JSONResponse, HTMLResponse
 from fastapi.openapi.utils import get_openapi
+from fastapi.exception_handlers import http_exception_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 from slowapi import _rate_limit_exceeded_handler
@@ -88,6 +89,13 @@ def internal_openapi(user=Depends(require_admin)):
 @app.get('/admin/docs', include_in_schema=False)
 def admin_docs(user=Depends(require_admin)):
         return HTMLResponse(content=SWAGGER_HTML, status_code=200)
+
+@app.exception_handler(HTTPException)
+async def custom_http_exception_handler(request: Request, exc: HTTPException):
+    # Provide a friendlier UX for unauthenticated access to the guarded docs
+    if request.url.path == '/admin/docs' and exc.status_code == 401:
+        return RedirectResponse(url='/admin/login', status_code=302)
+    return await http_exception_handler(request, exc)
 
 if __name__ == "__main__":
     uvicorn.run("src.main:app", host="0.0.0.0", port=settings.port, reload=True)
