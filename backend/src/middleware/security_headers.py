@@ -14,8 +14,14 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
         response.headers.setdefault("Permissions-Policy", "geolocation=(), microphone=(), camera=()")
 
-        # Swagger UI (/docs) and ReDoc (/redoc) need relaxed CSP for their inline scripts and CDN assets
-        if path.startswith("/docs") or path.startswith("/redoc") or path.startswith("/openapi.json"):
+        # Swagger UI & ReDoc or admin-guarded docs need relaxed CSP for inline scripts/CDN assets
+        if (
+            path.startswith("/docs")
+            or path.startswith("/redoc")
+            or path.startswith("/openapi.json")
+            or path.startswith("/admin/docs")
+            or path.startswith("/internal/openapi.json")
+        ):
             # Allow inline scripts & styles and necessary CDN for swagger-ui assets
             csp = (
                 "default-src 'self'; "
