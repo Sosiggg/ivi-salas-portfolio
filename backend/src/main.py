@@ -9,14 +9,13 @@ from .utils.config import settings
 from .utils.limiter import limiter
 from .middleware.security_headers import SecurityHeadersMiddleware
 from .utils.database import engine
-from .utils.bootstrap_admin import bootstrap_admin  # type: ignore
 from .models import base  # noqa: F401
 from .routes import auth, projects, contact, skills, certificates, experiences, education, users
 
 app = FastAPI(title="Portfolio API", version="0.1.0")
 
-# One-off admin bootstrap (noop unless env flag set)
-bootstrap_admin()
+# (Admin bootstrap removed: handled exclusively in container entrypoint to avoid import errors
+# and to keep runtime app code free of seeding side-effects.)
 
 # Rate limiting integration
 app.state.limiter = limiter
