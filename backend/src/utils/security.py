@@ -48,10 +48,17 @@ def create_refresh_token(subject: str) -> str:
     return jwt.encode(to_encode, settings.jwt_secret, algorithm=ALGORITHM)
 
 
-def get_current_user_id(credentials: HTTPAuthorizationCredentials = Depends(reuseable_oauth)) -> str:
-    if credentials is None:
+def get_current_user_id(request: Request, credentials: HTTPAuthorizationCredentials = Depends(reuseable_oauth)) -> str:
+    token = None
+    if credentials is not None:
+        token = credentials.credentials
+    else:
+        # Fallback to cookie for admin portal convenience
+        cookie_token = request.cookies.get("access_token")
+        if cookie_token:
+            token = cookie_token
+    if not token:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
-    token = credentials.credentials
     try:
         payload = jwt.decode(token, settings.jwt_secret, algorithms=[ALGORITHM])
         subject: str | None = payload.get("sub")

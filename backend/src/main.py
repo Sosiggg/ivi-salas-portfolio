@@ -11,7 +11,7 @@ from .utils.limiter import limiter
 from .middleware.security_headers import SecurityHeadersMiddleware
 from .utils.database import engine
 from .models import base  # noqa: F401
-from .routes import auth, projects, contact, skills, certificates, experiences, education, users, admin
+from .routes import auth, projects, contact, skills, certificates, experiences, education, users, admin, admin_portal
 from .utils.security import require_admin
 
 app = FastAPI(
@@ -48,6 +48,7 @@ app.include_router(experiences.router, prefix="/api")
 app.include_router(education.router, prefix="/api")
 app.include_router(users.router, prefix="/api")
 app.include_router(admin.router, prefix="/api")
+app.include_router(admin_portal.router)
 
 @app.get('/api/health')
 def health():
