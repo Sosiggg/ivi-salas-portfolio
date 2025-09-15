@@ -91,25 +91,37 @@ def diagnostic_probe():
     }
 
 SWAGGER_HTML = """<!DOCTYPE html>
-<html>
+<html lang='en'>
 <head>
+    <meta charset='utf-8' />
     <title>Admin API Docs</title>
     <link rel=\"stylesheet\" href=\"https://unpkg.com/swagger-ui-dist/swagger-ui.css\" />
-    <style>body { margin:0; background:#121212; } .swagger-ui .topbar { background:#222; }</style>
+    <style>
+        :root { color-scheme: light; }
+        body { margin:0; background:#f5f7fb; font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif; }
+        .swagger-ui .topbar { background:#ffffff; border-bottom:1px solid #e5e7eb; box-shadow:0 2px 4px rgba(0,0,0,0.04); }
+        .topbar-wrapper span { color:#111827 !important; }
+        .swagger-ui .info { margin:20px 0 10px; }
+        .swagger-ui .scheme-container { background:#fff; border:1px solid #e5e7eb; }
+        .swagger-ui .opblock { border-radius:10px; }
+        .swagger-ui .opblock-tag { font-weight:600; }
+        .swagger-ui .btn.execute { background:#2563eb; border-radius:6px; }
+        .swagger-ui .btn.execute:hover { background:#1d4ed8; }
+    </style>
 </head>
 <body>
-<div id=\"swagger-ui\"></div>
-<script src=\"https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js\"></script>
-<script>
-window.addEventListener('load', () => {
-    const ui = SwaggerUIBundle({
-        url: '/internal/openapi.json',
-        dom_id: '#swagger-ui',
-        presets: [SwaggerUIBundle.presets.apis],
-        layout: 'BaseLayout'
-    });
-});
-</script>
+    <div id='swagger-ui'></div>
+    <script src=\"https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js\"></script>
+    <script>
+        window.addEventListener('load', () => {
+            SwaggerUIBundle({
+                url: '/internal/openapi.json',
+                dom_id: '#swagger-ui',
+                presets: [SwaggerUIBundle.presets.apis],
+                layout: 'BaseLayout'
+            });
+        });
+    </script>
 </body>
 </html>"""
 

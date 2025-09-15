@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
 from ..utils.database import get_db
 from ..models.user import User
-from ..utils.security import verify_password, create_access_token, require_admin
+from ..utils.security import verify_password, create_access_token, require_admin, get_current_user
 
 router = APIRouter(prefix="/admin", tags=["admin-portal"], include_in_schema=False)
 
@@ -65,7 +65,15 @@ LOGIN_HTML = """<!doctype html><html lang='en'>
 </html>"""
 
 @router.get('/login', response_class=HTMLResponse)
-async def login_form(request: Request):
+async def login_form(request: Request, db: Session = Depends(get_db)):
+    # If already authenticated as admin, redirect to docs
+    try:
+        # Re-use dependency logic: if token valid and role admin, send them on
+        user = get_current_user(db=db)  # will raise if not authenticated
+        if user.role == 'admin':
+            return RedirectResponse(url='/admin/docs', status_code=302)
+    except Exception:
+        pass
     return HTMLResponse(LOGIN_HTML.replace('__ERROR_PLACEHOLDER__', ''))
 
 @router.post('/login', response_class=HTMLResponse)
