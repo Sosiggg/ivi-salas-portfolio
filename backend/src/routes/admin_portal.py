@@ -15,18 +15,19 @@ LOGIN_HTML = """<!doctype html><html><head><title>Admin Login</title>
 <label>Email</label><input name='email' type='email' required />
 <label>Password</label><input name='password' type='password' required />
 <button type='submit'>Sign In</button>
-{error}
+__ERROR_PLACEHOLDER__
 </form></body></html>"""
 
 @router.get('/login', response_class=HTMLResponse)
 async def login_form(request: Request):
-    return HTMLResponse(LOGIN_HTML.format(error=""))
+    return HTMLResponse(LOGIN_HTML.replace('__ERROR_PLACEHOLDER__', ''))
 
 @router.post('/login', response_class=HTMLResponse)
 async def login_submit(response: Response, email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == email.lower()).first()
     if not user or not verify_password(password, user.hashed_password) or user.role != 'admin':
-        return HTMLResponse(LOGIN_HTML.format(error="<p class='err'>Invalid credentials</p>"), status_code=400)
+        error_html = "<p class='err'>Invalid credentials</p>"
+        return HTMLResponse(LOGIN_HTML.replace('__ERROR_PLACEHOLDER__', error_html), status_code=400)
     token = create_access_token(str(user.id))
     # Set secure cookie (HttpOnly). On local HTTP fallback, secure may block; keep True for production.
     response = RedirectResponse(url="/admin/docs", status_code=302)
