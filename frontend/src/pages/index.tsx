@@ -5,6 +5,7 @@ import { useProjects } from '../hooks/useProjects';
 import { useSkills } from '../hooks/useSkills';
 import { useExperiences } from '../hooks/useExperiences';
 import { useCertificates } from '../hooks/useCertificates';
+import { SkeletonList, SkeletonBadgeRow } from '../components/Skeleton';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 10 },
@@ -19,13 +20,6 @@ export default function HomePage() {
   const { data: experiences, isLoading: loadingExp } = useExperiences();
   const { data: certificates, isLoading: loadingCerts } = useCertificates();
 
-  const Skeleton = ({ lines = 1, className = '' }: { lines?: number; className?: string }) => (
-    <div className={className}>
-      {Array.from({ length: lines }).map((_, i) => (
-        <div key={i} className="animate-pulse h-4 rounded bg-gray-200 dark:bg-gray-700 mb-3 last:mb-0" />
-      ))}
-    </div>
-  );
 
   return (
   <Layout>
@@ -57,7 +51,7 @@ export default function HomePage() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
           <div className="p-6 rounded-xl border bg-white/60 dark:bg-gray-900/40 backdrop-blur border-gray-200 dark:border-gray-700 shadow-sm">
             <h2 className="font-semibold text-lg mb-4">Highlighted Projects</h2>
-            {loadingProjects && <Skeleton lines={3} />}
+            {loadingProjects && <SkeletonList count={3} />}
             {!loadingProjects && projects && (
               <ul className="space-y-3">
                 {projects.items.slice(0,3).map(p => (
@@ -72,7 +66,7 @@ export default function HomePage() {
 
           <div className="p-6 rounded-xl border bg-white/60 dark:bg-gray-900/40 backdrop-blur border-gray-200 dark:border-gray-700 shadow-sm">
             <h2 className="font-semibold text-lg mb-4">Core Skills</h2>
-            {loadingSkills && <Skeleton lines={2} />}
+            {loadingSkills && <SkeletonBadgeRow count={12} />}
             {!loadingSkills && skills && (
               <div className="flex flex-wrap gap-2">
                 {skills.items.slice(0,12).map(s => (
@@ -84,7 +78,7 @@ export default function HomePage() {
 
           <div className="p-6 rounded-xl border bg-white/60 dark:bg-gray-900/40 backdrop-blur border-gray-200 dark:border-gray-700 shadow-sm md:col-span-2 lg:col-span-1">
             <h2 className="font-semibold text-lg mb-4">Recent Experience</h2>
-            {loadingExp && <Skeleton lines={3} />}
+            {loadingExp && <SkeletonList count={3} />}
             {!loadingExp && experiences && (
               <ul className="space-y-3">
                 {experiences.items.slice(0,3).map(e => (
@@ -99,7 +93,7 @@ export default function HomePage() {
 
           <div className="p-6 rounded-xl border bg-white/60 dark:bg-gray-900/40 backdrop-blur border-gray-200 dark:border-gray-700 shadow-sm md:col-span-2 lg:col-span-1">
             <h2 className="font-semibold text-lg mb-4">Latest Certificates</h2>
-            {loadingCerts && <Skeleton lines={3} />}
+            {loadingCerts && <SkeletonList count={3} />}
             {!loadingCerts && certificates && (
               <ul className="space-y-3">
                 {certificates.items.slice(0,3).map(c => (
