@@ -7,16 +7,62 @@ from ..utils.security import verify_password, create_access_token, require_admin
 
 router = APIRouter(prefix="/admin", tags=["admin-portal"], include_in_schema=False)
 
-LOGIN_HTML = """<!doctype html><html><head><title>Admin Login</title>
-<meta name='viewport' content='width=device-width,initial-scale=1'>
-<style>body{font-family:system-ui;background:#121212;color:#f5f5f5;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}form{background:#1e1e1e;padding:2rem;border-radius:12px;min-width:300px;box-shadow:0 4px 18px -2px #000}h1{margin-top:0;font-size:1.25rem}label{display:block;margin:.75rem 0 .25rem;font-weight:600}input{width:100%;padding:.6rem;border-radius:6px;border:1px solid #333;background:#222;color:#fff}button{margin-top:1rem;width:100%;padding:.75rem;border:none;border-radius:8px;background:#6366f1;color:#fff;font-weight:600;cursor:pointer}button:hover{background:#4f46e5}p.err{color:#f87171;font-size:.85rem;margin:.5rem 0 0;text-align:center}</style>
-</head><body><form method='post'>
-<h1>Admin Login</h1>
-<label>Email</label><input name='email' type='email' required />
-<label>Password</label><input name='password' type='password' required />
-<button type='submit'>Sign In</button>
-__ERROR_PLACEHOLDER__
-</form></body></html>"""
+LOGIN_HTML = """<!doctype html><html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <title>Admin Login</title>
+    <meta name='viewport' content='width=device-width,initial-scale=1' />
+    <style>
+        :root {
+            --bg: #f5f7fb;
+            --card-bg: #ffffff;
+            --card-border: #e5e7eb;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --danger: #dc2626;
+            --text: #111827;
+            --text-dim: #4b5563;
+            --radius: 14px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-lg: 0 20px 40px -8px rgba(0,0,0,0.15);
+            --focus: 0 0 0 3px rgba(37,99,235,0.35);
+            font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+        }
+        * { box-sizing: border-box; }
+        body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
+        .wrap { width:min(440px,90%); padding:2.75rem 2.5rem 2.5rem; background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius); box-shadow:var(--shadow-sm), var(--shadow-lg); position:relative; overflow:hidden; }
+        h1 { margin:0 0 1.2rem; font-size:1.7rem; letter-spacing:-0.5px; font-weight:600; }
+        p.sub { margin:-.6rem 0 1.8rem; font-size:.9rem; color:var(--text-dim); }
+        label { display:block; font-size:.8rem; font-weight:600; text-transform:uppercase; letter-spacing:.05em; margin:1.15rem 0 .4rem; color:var(--text-dim); }
+        input { width:100%; padding:.85rem .9rem; font-size:.95rem; border:1px solid #d1d5db; border-radius:10px; background:#f9fafb; transition:.15s border, .15s background, .15s box-shadow; }
+        input:focus { outline:none; border-color:var(--accent); background:#fff; box-shadow:var(--focus); }
+        button { margin-top:1.6rem; width:100%; padding:.95rem 1rem; font-size:1rem; font-weight:600; border:none; border-radius:12px; background:linear-gradient(150deg,var(--accent),#1e40af); color:#fff; cursor:pointer; box-shadow:0 6px 18px -6px rgba(37,99,235,.55),0 2px 4px rgba(0,0,0,.05); letter-spacing:.3px; transition:.18s transform, .18s box-shadow, .18s filter; }
+        button:hover { filter:brightness(1.05); }
+        button:active { transform:translateY(2px); box-shadow:0 3px 10px -4px rgba(37,99,235,.45),0 1px 2px rgba(0,0,0,.08); }
+        button:focus-visible { outline:none; box-shadow:var(--focus); }
+        .footer { margin-top:2.2rem; font-size:.7rem; text-align:center; color:var(--text-dim); letter-spacing:.05em; }
+        p.err { background: var(--danger); color:#fff; padding:.65rem .85rem; border-radius:10px; font-size:.8rem; margin:1rem 0 0; text-align:center; box-shadow:0 4px 14px -6px rgba(220,38,38,.55); animation:fadeIn .35s ease; }
+        @media (max-width:520px){ .wrap { padding:2.1rem 1.5rem 2rem; border-radius:20px; } h1 { font-size:1.5rem; } }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+    </style>
+</head>
+<body>
+    <main class='wrap' role='main' aria-labelledby='admin-login-heading'>
+        <h1 id='admin-login-heading'>Admin Access</h1>
+        <p class='sub'>Sign in with your administrator credentials.</p>
+        <form method='post' autocomplete='on'>
+            <label for='email'>Email</label>
+            <input id='email' name='email' type='email' inputmode='email' required autofocus />
+            <label for='password'>Password</label>
+            <input id='password' name='password' type='password' required />
+            __ERROR_PLACEHOLDER__
+            <button type='submit'>Sign In</button>
+        </form>
+        <div class='footer'>© <span id='y'></span> Admin Portal</div>
+    </main>
+    <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>"""
 
 @router.get('/login', response_class=HTMLResponse)
 async def login_form(request: Request):
