@@ -107,9 +107,18 @@ SWAGGER_HTML = """<!DOCTYPE html>
         .swagger-ui .opblock-tag { font-weight:600; }
         .swagger-ui .btn.execute { background:#2563eb; border-radius:6px; }
         .swagger-ui .btn.execute:hover { background:#1d4ed8; }
+        .logout-btn { font-size:.75rem; font-weight:600; border:none; background:#ef4444; color:#fff; padding:.55rem .85rem; border-radius:8px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.15); display:inline-flex; align-items:center; gap:.4rem; }
+        .logout-btn:hover { background:#dc2626; }
+        .logout-wrapper { position:absolute; top:8px; right:14px; z-index:50; }
+        @media (max-width:680px){ .logout-btn { padding:.5rem .65rem; } }
     </style>
 </head>
 <body>
+    <form class='logout-wrapper' method='POST' action='/admin/logout'>
+        <button type='submit' class='logout-btn' title='Sign out'>
+            <span>Logout</span>
+        </button>
+    </form>
     <div id='swagger-ui'></div>
     <script src=\"https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js\"></script>
     <script>
