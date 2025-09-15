@@ -3,6 +3,7 @@ from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.responses import RedirectResponse, JSONResponse, HTMLResponse
 from fastapi.openapi.utils import get_openapi
 from fastapi.exception_handlers import http_exception_handler
+import traceback
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 from slowapi import _rate_limit_exceeded_handler
@@ -126,6 +127,24 @@ async def custom_http_exception_handler(request: Request, exc: HTTPException):
     if request.url.path == '/admin/docs' and exc.status_code == 401:
         return RedirectResponse(url='/admin/login', status_code=302)
     return await http_exception_handler(request, exc)
+
+@app.middleware('http')
+async def diag_error_wrapper(request: Request, call_next):
+    if not app_settings.diag_enabled:
+        return await call_next(request)
+    try:
+        return await call_next(request)
+    except Exception as e:  # pragma: no cover
+        tb = traceback.format_exc()
+        # Return structured JSON with traceback for debugging (never include secrets)
+        return JSONResponse(
+            status_code=500,
+            content={
+                "error": str(e.__class__.__name__),
+                "detail": str(e),
+                "traceback": tb.splitlines()[-25:],  # tail to keep response smaller
+            },
+        )
 
 if __name__ == "__main__":
     uvicorn.run("src.main:app", host="0.0.0.0", port=settings.port, reload=True)
