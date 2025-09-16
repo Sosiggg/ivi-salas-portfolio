@@ -22,31 +22,33 @@ export default function HomePage() {
 
 
   return (
-  <Layout>
-      <Head>
-        <title>Home | Ivi Salas</title>
-      </Head>
-      <main className="min-h-screen px-6 py-24 max-w-6xl mx-auto">
-        <section className="space-y-6 mb-16">
-          <motion.h1
-            initial="hidden"
-            animate="show"
-            variants={fadeIn}
-            transition={{ duration: 0.6 }}
-            className="text-4xl font-bold tracking-tight"
-          >
-            Hi, I&apos;m Ivi 👋
-          </motion.h1>
-          <motion.p
-            initial="hidden"
-            animate="show"
-            variants={fadeIn}
-            transition={{ duration: 0.9 }}
-            className="text-lg text-gray-600 dark:text-gray-300 max-w-prose"
-          >
-            Full-stack developer focused on crafting performant, accessible, and delightful web experiences.
-          </motion.p>
-        </section>
+    <Layout>
+        <Head>
+          <title>Home | Ivi Salas</title>
+        </Head>
+        <main className="min-h-screen px-6 py-24 max-w-6xl mx-auto">
+          <section className="space-y-6 mb-16">
+            <motion.div
+              initial="hidden"
+              animate="show"
+              variants={fadeIn}
+              transition={{ duration: 0.6 }}
+            >
+              <h1 className="text-4xl font-bold tracking-tight">
+                Hi, I&apos;m Ivi 👋
+              </h1>
+            </motion.div>
+            <motion.div
+              initial="hidden"
+              animate="show"
+              variants={fadeIn}
+              transition={{ duration: 0.9 }}
+            >
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-prose">
+                Full-stack developer focused on crafting performant, accessible, and delightful web experiences.
+              </p>
+            </motion.div>
+          </section>
 
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
           <div className="p-6 rounded-xl border bg-white/60 dark:bg-gray-900/40 backdrop-blur border-gray-200 dark:border-gray-700 shadow-sm">
