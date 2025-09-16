@@ -13,3 +13,30 @@ body {
 .dark .transition-colors, .transition-colors {
   @apply duration-300 ease-in-out;
 }
+
+/* Typography Scale & Utilities */
+@layer base {
+  h1 { @apply font-heading font-semibold tracking-tight text-4xl md:text-5xl xl:text-6xl text-balance; }
+  h2 { @apply font-heading font-semibold tracking-tight text-3xl md:text-4xl text-balance; }
+  h3 { @apply font-heading font-semibold tracking-tight text-2xl md:text-3xl; }
+  h4 { @apply font-heading font-semibold text-xl; }
+  :root { --ring-color: theme('colors.brand.500'); }
+}
+
+/* Focus Ring */
+*:focus-visible {
+  outline: 2px solid var(--ring-color);
+  outline-offset: 3px;
+}
+
+/* Text Balance (fallback if unsupported) */
+h1, h2 { text-wrap: balance; }
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+/* Smooth container utility (future usage) */
+.container-responsive { @apply mx-auto px-4 sm:px-6 lg:px-8; }
+
