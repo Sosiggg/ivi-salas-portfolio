@@ -11,7 +11,7 @@ export interface Project {
   image_url?: string;
 }
 
-async function fetchProjects(page: number, limit: number): Promise<Paginated<Project>> {
+export async function fetchProjects(page: number, limit: number): Promise<Paginated<Project>> {
   const skip = (page - 1) * limit;
   const { data } = await api.get(`/projects?skip=${skip}&limit=${limit}`);
   return data;

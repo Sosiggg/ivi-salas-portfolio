@@ -3,7 +3,7 @@ import { api, Paginated } from '../utils/apiClient';
 
 export interface Certificate { id: number; title: string; issuer: string; verification_url?: string; image_url?: string }
 
-async function fetchCertificates(): Promise<Paginated<Certificate>> {
+export async function fetchCertificates(): Promise<Paginated<Certificate>> {
   const { data } = await api.get('/certificates');
   return data;
 }

@@ -11,7 +11,7 @@ export interface Education {
 	end_year?: number;
 }
 
-async function fetchEducation(): Promise<Paginated<Education>> {
+export async function fetchEducation(): Promise<Paginated<Education>> {
 	const { data } = await api.get('/education');
 	return data;
 }

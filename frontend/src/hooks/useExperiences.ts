@@ -3,7 +3,7 @@ import { api, Paginated } from '../utils/apiClient';
 
 export interface Experience { id: number; company: string; role: string; description?: string; start_date: string; end_date?: string }
 
-async function fetchExperiences(): Promise<Paginated<Experience>> {
+export async function fetchExperiences(): Promise<Paginated<Experience>> {
   const { data } = await api.get('/experiences');
   return data;
 }
