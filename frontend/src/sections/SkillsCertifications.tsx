@@ -27,9 +27,9 @@ export default function SkillsCertifications() {
   const skills = data?.items?.length ? data.items : fallbackSkills;
 
   return (
-    <section id="skills" className="py-20 px-6 max-w-6xl mx-auto snap-start">
+  <section id="skills" className="py-16 px-4 sm:px-6 max-w-6xl mx-auto snap-start">
       <h2 className="text-2xl font-bold mb-8">Skills & Certifications</h2>
-      <div className="grid md:grid-cols-2 gap-12 mb-12">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12">
         <div>
           <h3 className="font-semibold mb-4">Technical Skills</h3>
           {isLoading ? (
@@ -67,7 +67,7 @@ export default function SkillsCertifications() {
         </div>
       </div>
       <h3 className="font-semibold mb-4">📜 Certifications & Badges</h3>
-      <div className="grid md:grid-cols-3 gap-6">
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
         {isLoading ? (
           <SkeletonBadgeRow count={certifications.length || 3} />
         ) : isError ? (
