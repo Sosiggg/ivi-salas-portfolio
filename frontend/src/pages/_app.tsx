@@ -4,8 +4,13 @@ import { ThemeProvider } from 'next-themes';
 import { DefaultSeo } from 'next-seo';
 import { seoConfig } from '../utils/seoConfig';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import dynamic from 'next/dynamic';
 import { fontVariables } from '../styles/fonts';
+
+const ReactQueryDevtools = dynamic(
+  () => import('@tanstack/react-query-devtools').then(mod => mod.ReactQueryDevtools),
+  { ssr: false }
+);
 
 const queryClient = new QueryClient();
 
@@ -16,6 +21,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <div className={`${fontVariables} font-sans min-h-screen`}>  {/* Font variables + base font */}
           <DefaultSeo {...seoConfig} />
           <Component {...pageProps} />
+          {/* Only render devtools on client to avoid SSR crash */}
           <ReactQueryDevtools initialIsOpen={false} />
         </div>
       </QueryClientProvider>
