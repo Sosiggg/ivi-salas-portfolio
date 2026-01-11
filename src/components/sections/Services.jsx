@@ -77,10 +77,10 @@ const Services = () => {
   }
 
   return (
-    <section id="services" className="min-h-screen flex items-center justify-center p-3 xs:p-4 sm:p-6 md:p-8 lg:p-12 bg-white">
-      {/* Main container with background image - full height */}
+    <section id="services" className="min-h-screen flex items-center justify-center pt-20 pb-4 px-3 xs:pt-24 xs:pb-4 xs:px-4 sm:pt-6 sm:pb-6 sm:px-6 md:p-8 lg:p-12 bg-white">
+      {/* Main container with background image */}
       <div 
-        className="relative w-full h-full min-h-[calc(100vh-24px)] xs:min-h-[calc(100vh-32px)] sm:min-h-[calc(100vh-48px)] md:min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-96px)] rounded-2xl sm:rounded-3xl overflow-hidden bg-cover bg-center bg-no-repeat flex flex-col"
+        className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-cover bg-center bg-no-repeat flex flex-col"
         style={{ backgroundImage: 'url(/servicesbg.png)' }}
       >
         {/* Subtle white film overlay */}
@@ -89,7 +89,7 @@ const Services = () => {
         <div className="absolute inset-0 bg-black/70" />
         
         {/* Content */}
-        <div className="relative z-10 flex flex-col h-full p-4 xs:p-5 sm:p-6 md:p-8 lg:p-12 xl:p-16">
+        <div className="relative z-10 flex flex-col p-4 xs:p-5 sm:p-6 md:p-8 lg:p-12 xl:p-16">
           {/* Header Section */}
           <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-4 xs:mb-5 sm:mb-6 md:mb-8 lg:mb-10">
             <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-urbanist font-semibold text-white mb-2 xs:mb-3 sm:mb-4 lg:mb-0">
@@ -100,18 +100,18 @@ const Services = () => {
             </p>
           </div>
 
-          {/* Carousel Container - takes remaining space */}
-          <div className="relative flex-1 flex flex-col px-0 sm:px-12 md:px-14 lg:px-16">
+          {/* Carousel Container */}
+          <div className="relative flex flex-col px-0 sm:px-12 md:px-14 lg:px-16">
             {/* Cards Container */}
-            <div className="overflow-hidden flex-1">
+            <div className="overflow-hidden">
               <div 
-                className="flex transition-transform duration-500 ease-out h-full"
+                className="flex transition-transform duration-500 ease-out"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
                 {Array.from({ length: totalSlides }).map((_, slideIndex) => (
                   <div 
                     key={slideIndex} 
-                    className="flex gap-3 xs:gap-4 md:gap-5 lg:gap-6 min-w-full h-full py-2"
+                    className="flex gap-3 xs:gap-4 md:gap-5 lg:gap-6 min-w-full py-2"
                   >
                     {getVisibleServices(slideIndex).map((service, index) => (
                       <ServiceCard key={service.title} service={service} index={index} />
@@ -173,12 +173,12 @@ const ServiceCard = ({ service, index }) => {
   
   return (
     <div 
-      className="flex-1 basis-0 min-w-0 animate-fade-in-up h-full"
+      className="flex-1 basis-0 min-w-0 animate-fade-in-up"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
-      <div className="relative h-full group">
+      <div className="relative group">
         {/* Card with glass effect */}
-        <div className="service-card-glass h-full p-4 xs:p-5 sm:p-6 md:p-8 lg:p-10 flex flex-col">
+        <div className="service-card-glass p-4 xs:p-5 sm:p-6 md:p-8 lg:p-10 flex flex-col min-h-[280px] xs:min-h-[300px] sm:min-h-[320px] md:min-h-[360px] lg:min-h-[400px]">
           {/* Icon with color change on hover */}
           <div className="mb-3 xs:mb-4 md:mb-6 relative">
             <div className="w-10 h-10 xs:w-12 xs:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl bg-white/10 flex items-center justify-center 
