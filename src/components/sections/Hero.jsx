@@ -1,85 +1,113 @@
-import Button from '../common/Button'
+import { ArrowUpRight } from 'lucide-react'
 
 const Hero = () => {
   return (
-    <section id="home" className="min-h-screen pt-24 pb-12 md:pt-28 overflow-hidden">
-      <div className="container-custom">
-        <div className="relative flex flex-col items-center">
+    <section id="home" className="h-full pt-20 xs:pt-22 sm:pt-24 md:pt-28 lg:pt-32 overflow-hidden bg-white flex flex-col">
+      <div className="flex-1 flex flex-col relative">
+        {/* Top Content */}
+        <div className="container-custom max-w-7xl">
           {/* Hello Badge */}
-          <div className="mb-6 animate-fade-in-up">
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-700 shadow-sm">
+          <div className="flex justify-center mb-1 xs:mb-1.5 sm:mb-2 animate-fade-in-up">
+            <span className="inline-flex items-center px-4 xs:px-5 sm:px-6 py-1 xs:py-1.5 bg-white border-2 border-gray-800 rounded-full text-[10px] xs:text-xs sm:text-sm font-lufga font-medium text-gray-800">
               Hello!
-              <span className="text-primary">✨</span>
             </span>
           </div>
 
           {/* Main Heading */}
-          <div className="text-center mb-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            <h1 className="heading-primary mb-2">
+          <div className="text-center mb-0 px-2 animate-fade-in-up relative z-10" style={{ animationDelay: '0.1s' }}>
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-urbanist font-semibold leading-[1.05] mb-0">
               I'm{' '}
-              <span className="text-primary italic">Ivi Susej Marie E. Salas</span>,
+              <span className="text-primary">Ivi Susej Marie E. Salas</span>,
             </h1>
-            <p className="text-4xl md:text-5xl lg:text-6xl font-serif italic text-gray-800 flex items-center justify-center gap-3">
-              <DecorativeLines />
+            <p className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-urbanist font-semibold text-gray-800 leading-[1.05]">
               Aspiring Web Developer
             </p>
           </div>
+        </div>
 
-          {/* Content Container */}
-          <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-end mt-4">
-            {/* Left Quote */}
-            <div className="hidden lg:block animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <div className="quote-mark">"</div>
-              <p className="text-gray-600 text-sm leading-relaxed max-w-xs">
-                I am passionate about web development, focused on building user-friendly, 
-                visually engaging, and responsive websites.
-              </p>
-            </div>
-
-            {/* Center - Profile Image */}
-            <div className="flex justify-center animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-              <div className="relative">
-                {/* Blue Circle Background */}
-                <div className="w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 bg-primary rounded-full absolute bottom-0 left-1/2 -translate-x-1/2" />
-                
-                {/* Profile Image */}
-                <div className="relative z-10">
-                  <ProfileImage />
-                </div>
-
-                {/* CTA Buttons - Positioned over the image */}
-                <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20 flex items-center">
-                  <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full p-1">
-                    <Button variant="primary" hasArrow href="#projects">
-                      Portfolio
-                    </Button>
-                    <Button variant="secondary" href="#contact" className="ml-1">
-                      Hire me
-                    </Button>
-                  </div>
-                </div>
+        {/* Bottom Content - fills remaining space */}
+        <div className="flex-1 relative mt-[-1rem] xs:mt-[-1.5rem] sm:mt-[-2rem] md:mt-[-3rem] lg:mt-[-4rem]">
+          <div className="container-custom max-w-7xl h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6 h-full">
+              {/* Left Quote - positioned lower */}
+              <div className="hidden lg:flex flex-col justify-center animate-fade-in-up pt-16 xl:pt-20" style={{ animationDelay: '0.2s' }}>
+                <QuoteIcon />
+                <p className="text-secondary font-montserrat text-xs xl:text-sm leading-relaxed max-w-xs">
+                  I am passionate about web development,<br />
+                  focused on building user-friendly, visually engaging,
+                  and responsive websites.
+                </p>
               </div>
-            </div>
 
-            {/* Right - Education Badge */}
-            <div className="hidden lg:flex flex-col items-end animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-              <div className="text-right">
-                <p className="font-semibold text-gray-800 text-lg">BS in Information Technology</p>
-                <p className="text-gray-500">Dean's Lister</p>
+              {/* Center placeholder for grid */}
+              <div className="hidden lg:block" />
+
+              {/* Right - Education Badge - positioned lower */}
+              <div className="hidden lg:flex flex-col items-end justify-center animate-fade-in-up pt-16 xl:pt-20" style={{ animationDelay: '0.4s' }}>
+                <div className="text-right">
+                  <p className="font-montserrat font-bold text-gray-800 text-sm xl:text-base">BS in Information Technology</p>
+                  <p className="font-montserrat text-gray-500 text-xs xl:text-sm">Dean's Lister</p>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Mobile Quote & Education */}
-          <div className="lg:hidden mt-8 text-center px-4 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <p className="text-gray-600 text-sm leading-relaxed mb-4">
-              I am passionate about web development, focused on building user-friendly, 
-              visually engaging, and responsive websites.
-            </p>
-            <div>
-              <p className="font-semibold text-gray-800">BS in Information Technology</p>
-              <p className="text-gray-500 text-sm">Dean's Lister</p>
+          {/* Profile Group - Half Circle + Profile Image scale together */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10
+            h-[55%] xs:h-[58%] sm:h-[65%] md:h-[72%] lg:h-[80%] xl:h-[85%]
+            flex flex-col items-center justify-end">
+            {/* Half Circle - sized relative to profile container */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 
+              w-[140%] aspect-[2/1]
+              bg-primary rounded-t-full" 
+            />
+            
+            {/* Profile Image */}
+            <img 
+              src="/profile.png" 
+              alt="Ivi Susej Marie E. Salas - Aspiring Web Developer" 
+              className="relative z-10 h-full w-auto object-contain object-bottom drop-shadow-2xl"
+              loading="eager"
+            />
+
+            {/* Glass CTA Buttons - positioned lower */}
+            <div className="absolute bottom-[8%] xs:bottom-[9%] sm:bottom-[10%] md:bottom-[11%] lg:bottom-[12%] left-1/2 -translate-x-1/2 z-20">
+              <div className="flex items-center glass-container rounded-full p-0.5 xs:p-1 sm:p-1.5 shadow-xl 
+                min-w-[220px] xs:min-w-[250px] sm:min-w-[300px] md:min-w-[340px]">
+                <a 
+                  href="#projects"
+                  className="flex items-center justify-center gap-1.5 xs:gap-2 bg-primary text-white font-lufga font-bold 
+                    text-[10px] xs:text-xs sm:text-sm 
+                    px-4 xs:px-5 sm:px-6 md:px-8 
+                    py-2 xs:py-2.5 sm:py-3 
+                    rounded-full transition-all duration-300 hover:bg-primary/90"
+                >
+                  Portfolio
+                  <ArrowUpRight className="w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4" strokeWidth={2.5} />
+                </a>
+                <span
+                  className="flex-1 text-center font-lufga font-light text-white/80 
+                    text-[10px] xs:text-xs sm:text-sm 
+                    px-2 xs:px-3 sm:px-5 md:px-6 
+                    py-2 xs:py-2.5 sm:py-3 
+                    whitespace-nowrap cursor-default select-none"
+                >
+                  Hire me
+                </span>
+              </div>
             </div>
+          </div>
+        </div>
+
+        {/* Mobile/Tablet Quote & Education */}
+        <div className="lg:hidden absolute bottom-2 xs:bottom-3 sm:bottom-4 left-0 right-0 text-center px-3 xs:px-4 animate-fade-in-up z-0" style={{ animationDelay: '0.5s' }}>
+          <p className="text-secondary font-montserrat text-[10px] xs:text-xs sm:text-sm leading-relaxed mb-1 xs:mb-2 max-w-sm sm:max-w-md mx-auto">
+            I am passionate about web development, focused on building user-friendly, 
+            visually engaging, and responsive websites.
+          </p>
+          <div>
+            <p className="font-montserrat font-bold text-gray-800 text-[10px] xs:text-xs sm:text-sm">BS in Information Technology</p>
+            <p className="font-montserrat text-gray-500 text-[10px] xs:text-xs sm:text-sm">Dean's Lister</p>
           </div>
         </div>
       </div>
@@ -87,44 +115,16 @@ const Hero = () => {
   )
 }
 
-// Decorative wavy lines component
-const DecorativeLines = () => (
+// Quote icon component - styled like the design
+const QuoteIcon = () => (
   <svg 
-    className="w-8 h-8 text-primary" 
-    viewBox="0 0 32 32" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2"
+    className="w-6 h-6 lg:w-8 lg:h-8 xl:w-10 xl:h-10 text-secondary mb-1 lg:mb-2 -ml-1 lg:-ml-2" 
+    viewBox="0 0 40 40" 
+    fill="currentColor"
   >
-    <path d="M4 8 Q8 4, 12 8 T20 8" />
-    <path d="M4 16 Q8 12, 12 16 T20 16" />
+    <path d="M10 20 Q10 12, 18 12 L18 16 Q14 16, 14 20 L18 20 L18 28 L10 28 Z" />
+    <path d="M22 20 Q22 12, 30 12 L30 16 Q26 16, 26 20 L30 20 L30 28 L22 28 Z" />
   </svg>
-)
-
-// Profile Image placeholder component
-const ProfileImage = () => (
-  <div className="w-72 h-80 md:w-80 md:h-[22rem] lg:w-96 lg:h-[26rem] flex items-end justify-center">
-    {/* Placeholder for profile image - replace src with actual image */}
-    <div className="relative w-full h-full flex items-end justify-center">
-      <svg 
-        className="w-64 h-72 md:w-72 md:h-80 lg:w-80 lg:h-96 text-gray-300"
-        viewBox="0 0 200 250"
-        fill="currentColor"
-      >
-        {/* Silhouette placeholder */}
-        <ellipse cx="100" cy="60" rx="45" ry="50" fill="#e5e7eb" />
-        <path d="M30 250 Q30 150 100 130 Q170 150 170 250 Z" fill="#1e3a5f" />
-      </svg>
-      {/* 
-        Replace the SVG above with your actual image:
-        <img 
-          src="/profile.png" 
-          alt="Ivi Susej Marie E. Salas" 
-          className="w-full h-full object-contain object-bottom"
-        />
-      */}
-    </div>
-  </div>
 )
 
 export default Hero

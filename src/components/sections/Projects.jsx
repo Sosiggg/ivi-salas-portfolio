@@ -1,211 +1,250 @@
-import SectionTitle from '../common/SectionTitle'
-import Button from '../common/Button'
-import { ExternalLink, Github, Folder } from 'lucide-react'
+import { useState } from 'react'
+import { Github, ArrowLeft, ArrowRight } from 'lucide-react'
 
 const Projects = () => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+
   const projects = [
     {
-      title: 'Personal Portfolio Website',
-      description: 'A responsive portfolio website built with React.js and Tailwind CSS, showcasing modern web development practices and clean UI design.',
-      technologies: ['React.js', 'Tailwind CSS', 'Vite', 'JavaScript'],
-      concepts: ['Component-Based Architecture', 'Responsive Design', 'CSS Flexbox/Grid', 'State Management'],
-      image: null, // Replace with actual image path
-      liveUrl: '#',
-      githubUrl: '#',
-      featured: true,
+      title: 'SmarTanom',
+      subtitle: 'IoT Hydroponic Monitoring System',
+      description: 'A smart, scalable, plug-and-play, solar-powered system for monitoring nutrient conditions in hydroponic setups. It integrates IoT hardware with mobile and web applications to provide real-time data access, system diagnostics, and remote management for efficient and data-driven hydroponic operations.',
+      features: [
+        'Real-time nutrient and environmental monitoring',
+        'Solar-powered and energy-efficient operation',
+        'Web and mobile dashboard integration',
+        'Scalable multi-device support',
+      ],
+      technologies: ['ESP32', 'React', 'React Native', 'Django', 'PostgreSQL', 'Firebase'],
+      image: '/SmarTanom.png',
+      githubUrl: 'https://github.com/Sosiggg/SmarTanom',
     },
     {
-      title: 'Task Management App',
-      description: 'A full-featured task management application with CRUD operations, local storage persistence, and filtering capabilities.',
-      technologies: ['React.js', 'CSS3', 'LocalStorage API', 'JavaScript'],
-      concepts: ['CRUD Operations', 'State Management', 'Data Persistence', 'User Authentication'],
-      image: null,
-      liveUrl: '#',
-      githubUrl: '#',
-      featured: true,
+      title: 'TORI',
+      subtitle: 'Collaborative Inventory Management System',
+      description: 'A collaborative inventory management system designed for small businesses and vendors sharing booth spaces at events. It features role-based access for multiple sellers, mobile accessibility, cost-splitting, and automatic sales tracking.',
+      features: [
+        'Mobile accessibility optimized for smartphones',
+        'Role-based access (Admin, Co-Admin, Seller)',
+        'Real-time inventory and sales tracking',
+        'Stock alerts and performance reports',
+      ],
+      technologies: ['React.js', 'Node.js', 'Supabase', 'JavaScript'],
+      image: '/TORI.png',
+      githubUrl: 'https://github.com/Sosiggg/TORI',
     },
     {
-      title: 'E-Commerce Landing Page',
-      description: 'A modern and responsive e-commerce landing page with product showcase, shopping cart UI, and smooth animations.',
-      technologies: ['HTML5', 'CSS3', 'JavaScript', 'Figma'],
-      concepts: ['Responsive Design', 'CSS Animations', 'UI/UX Design', 'Cross-Browser Compatibility'],
-      image: null,
-      liveUrl: '#',
-      githubUrl: '#',
-      featured: false,
+      title: 'FitnessFeast',
+      subtitle: 'Fitness Recipe Website',
+      description: 'A recipe website designed for fitness-focused individuals. The platform offers a wide variety of recipes, each complete with nutritional facts, calorie counts, and categorized to meet specific fitness goals like weight loss and muscle gain.',
+      features: [
+        'Recipe display with nutritional facts',
+        'Categorization based on fitness goals',
+        'Clean and modern UI design',
+        'User-friendly interface',
+      ],
+      technologies: ['React.js', 'CSS', 'JavaScript', 'Vite'],
+      image: '/FitnessFeast.png',
+      githubUrl: 'https://github.com/Sosiggg/fitnessfeast',
     },
     {
-      title: 'Weather Dashboard',
-      description: 'A weather application that fetches real-time data from a weather API and displays forecasts with dynamic backgrounds.',
-      technologies: ['JavaScript', 'REST API', 'HTML5', 'CSS3'],
-      concepts: ['API Integration', 'Async/Await', 'DOM Manipulation', 'Error Handling'],
-      image: null,
-      liveUrl: '#',
-      githubUrl: '#',
-      featured: false,
+      title: 'RNGSUS Home Security',
+      subtitle: 'ESP32 + Arduino Security System',
+      description: 'An ESP32 and Arduino-based home security system that arms with a keypad/LCD, monitors temperature and humidity, detects motion and laser beam breaks, sounds a buzzer, and raises alerts via push notifications.',
+      features: [
+        'Keypad + LCD for arming/disarming',
+        'Motion sensor and laser tripwire detection',
+        'Temperature and humidity monitoring',
+        'Push notifications via Pushbullet/Pushover',
+      ],
+      technologies: ['ESP32', 'Arduino', 'C++', 'DHT22', 'PIR Sensor'],
+      image: '/HomeSecurity.jpg',
+      githubUrl: 'https://github.com/Sosiggg/RngsusHomeSecurity',
     },
     {
-      title: 'Quiz Application',
-      description: 'An interactive quiz app with multiple categories, score tracking, and timed questions for an engaging user experience.',
-      technologies: ['React.js', 'CSS Modules', 'JavaScript'],
-      concepts: ['State Management', 'Timer Functions', 'Conditional Rendering', 'Array Methods'],
-      image: null,
-      liveUrl: '#',
-      githubUrl: '#',
-      featured: false,
+      title: 'EnviroSense',
+      subtitle: 'Environmental Monitoring System',
+      description: 'A comprehensive environmental monitoring system that collects temperature, humidity, and obstacle detection data using ESP32 devices and displays it in real-time through both web and mobile applications.',
+      features: [
+        'Real-time sensor data visualization',
+        'Cross-platform mobile app (Flutter)',
+        'React web dashboard with charts',
+        'WebSocket for live updates',
+      ],
+      technologies: ['ESP32', 'FastAPI', 'Flutter', 'React', 'PostgreSQL'],
+      image: '/EnviroSense.png',
+      githubUrl: 'https://github.com/Sosiggg/EnviroSense',
     },
     {
-      title: 'Blog Platform UI',
-      description: 'A clean and minimal blog platform interface with article listings, reading view, and comment section designs.',
-      technologies: ['HTML5', 'Tailwind CSS', 'JavaScript'],
-      concepts: ['Semantic HTML', 'Typography', 'Accessibility', 'CSS Grid'],
-      image: null,
-      liveUrl: '#',
-      githubUrl: '#',
-      featured: false,
+      title: 'ABC Company Payroll System',
+      subtitle: 'Java Payroll Management',
+      description: 'A payroll management system developed using Java that streamlines the process of managing employee salaries, tax calculations, bonuses, and deductions. It ensures accuracy, compliance with regulations, and generates comprehensive payroll reports.',
+      features: [
+        'Employee management (Add, Update, Remove)',
+        'Automatic salary and tax calculation',
+        'Detailed payroll report generation',
+        'Secure admin authentication',
+      ],
+      technologies: ['Java', 'PostgreSQL', 'JDBC'],
+      image: '/ABC_PayrollSystem.png',
+      githubUrl: 'https://github.com/Sosiggg/payroll-management-system',
     },
   ]
 
-  const featuredProjects = projects.filter((p) => p.featured)
-  const otherProjects = projects.filter((p) => !p.featured)
+  const totalSlides = projects.length
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides)
+  }
+
+  const currentProject = projects[currentSlide]
 
   return (
-    <section id="projects" className="section-padding">
-      <div className="container-custom">
-        <SectionTitle
-          title="Projects"
-          subtitle="A showcase of my work demonstrating problem-solving skills and technical expertise."
-        />
+    <section id="projects" className="h-screen flex flex-col justify-center pt-20 pb-4 sm:pt-24 sm:pb-6 lg:pt-28 lg:pb-8 bg-gray-50 overflow-hidden">
+      <div className="container-custom h-full flex flex-col justify-center">
+        {/* Section Header */}
+        <div className="text-center mb-4 sm:mb-6 flex-shrink-0">
+          <div className="inline-flex items-center gap-3 mb-2">
+            <span className="h-px w-8 sm:w-12 bg-primary"></span>
+            <span className="text-primary text-sm sm:text-base font-semibold tracking-widest uppercase">My Work</span>
+            <span className="h-px w-8 sm:w-12 bg-primary"></span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-urbanist font-bold text-navDark">
+            Projects
+          </h2>
+        </div>
 
-        {/* Featured Projects */}
-        <div className="space-y-8 mb-16">
-          {featuredProjects.map((project, index) => (
-            <div
-              key={project.title}
-              className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center animate-fade-in-up ${
-                index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-              }`}
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {/* Project Image */}
-              <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                  {project.image ? (
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Folder size={64} className="text-primary/30" />
+        {/* Single Project Display */}
+        <div className="relative flex-1 min-h-0 flex items-center">
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center text-secondary hover:border-primary hover:text-primary hover:shadow-xl hover:-translate-y-1/2 hover:scale-110 transition-all duration-300 shadow-md"
+          >
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
+          
+          <button
+            onClick={nextSlide}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center text-secondary hover:border-primary hover:text-primary hover:shadow-xl hover:-translate-y-1/2 hover:scale-110 transition-all duration-300 shadow-md"
+          >
+            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
+
+          {/* Project Content */}
+          <div className="w-full px-14 sm:px-20">
+            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden h-[540px] sm:h-[520px] lg:h-[500px]">
+              <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
+                {/* Project Image */}
+                <div className="relative group overflow-hidden h-60 sm:h-64 lg:h-full">
+                  <img
+                    src={currentProject.image}
+                    alt={currentProject.title}
+                    className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                  />
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-navDark/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+
+                {/* Project Info */}
+                <div className="p-4 sm:p-5 lg:p-6 flex flex-col justify-between overflow-hidden">
+                  <div>
+                    <div className="mb-1">
+                      <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-semibold uppercase tracking-wider rounded-full">
+                        {currentProject.subtitle}
+                      </span>
                     </div>
-                  )}
-                </div>
-              </div>
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-urbanist font-bold text-navDark mb-3">
+                      {currentProject.title}
+                    </h3>
+                      <p className="text-secondary text-base leading-relaxed mb-5 text-justify">
+                      {currentProject.description}
+                    </p>
 
-              {/* Project Content */}
-              <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
-                  Featured Project
-                </span>
-                <h3 className="text-2xl font-semibold text-gray-800 mb-3">{project.title}</h3>
-                <p className="text-gray-600 mb-4 leading-relaxed">{project.description}</p>
+                    {/* Features */}
+                    <div className="mb-3">
+                      <h4 className="text-xs font-bold text-navDark mb-1.5 uppercase tracking-wide">Key Features</h4>
+                      <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+                        {currentProject.features.slice(0, 4).map((feature, index) => (
+                          <li key={index} className="flex items-start gap-2 text-secondary text-sm leading-snug">
+                            <svg className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                {/* Technologies */}
-                <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2">Technologies:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                    {/* Technologies */}
+                    <div className="mb-4">
+                      <div className="flex flex-wrap gap-1.5">
+                        {currentProject.technologies.slice(0, 5).map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2.5 py-1 bg-gray-100 text-secondary text-xs font-medium rounded-md border border-gray-200"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                        {currentProject.technologies.length > 5 && (
+                          <span className="px-2.5 py-1 bg-gray-100 text-secondary text-xs font-medium rounded-md border border-gray-200">
+                            +{currentProject.technologies.length - 5}
+                          </span>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
 
-                {/* Concepts */}
-                <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2">Key Concepts:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {project.concepts.map((concept) => (
-                      <span
-                        key={concept}
-                        className="px-3 py-1 border border-primary/30 text-primary text-sm rounded-full"
-                      >
-                        {concept}
-                      </span>
-                    ))}
+                  {/* GitHub Button */}
+                  <div>
+                    <a
+                      href={currentProject.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group/btn inline-flex items-center gap-2 px-4 py-2 bg-navDark text-white text-xs font-semibold rounded-lg hover:bg-primary hover:shadow-lg hover:shadow-primary/25 transition-all duration-300"
+                    >
+                      <Github className="w-4 h-4" />
+                      View on GitHub
+                      <svg className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </a>
                   </div>
-                </div>
-
-                {/* Links */}
-                <div className="flex gap-4">
-                  <Button variant="primary" href={project.liveUrl} hasArrow>
-                    <ExternalLink size={18} />
-                    Live Demo
-                  </Button>
-                  <Button variant="secondary" href={project.githubUrl}>
-                    <Github size={18} />
-                    Code
-                  </Button>
                 </div>
               </div>
             </div>
-          ))}
+          </div>
         </div>
 
-        {/* Other Projects Grid */}
-        <div>
-          <h3 className="text-2xl font-serif font-medium text-gray-800 text-center mb-8">
-            Other Projects
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {otherProjects.map((project, index) => (
-              <div
-                key={project.title}
-                className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-fade-in-up"
-                style={{ animationDelay: `${0.2 + index * 0.1}s` }}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <Folder size={40} className="text-primary" />
-                  <div className="flex gap-2">
-                    <a
-                      href={project.githubUrl}
-                      className="p-2 text-gray-400 hover:text-primary transition-colors"
-                      aria-label="View code on GitHub"
-                    >
-                      <Github size={20} />
-                    </a>
-                    <a
-                      href={project.liveUrl}
-                      className="p-2 text-gray-400 hover:text-primary transition-colors"
-                      aria-label="View live demo"
-                    >
-                      <ExternalLink size={20} />
-                    </a>
-                  </div>
-                </div>
-
-                <h4 className="text-lg font-semibold text-gray-800 mb-2">{project.title}</h4>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">{project.description}</p>
-
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.slice(0, 3).map((tech) => (
-                    <span
-                      key={tech}
-                      className="text-xs text-gray-500 font-medium"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* Pagination Dots with Project Names */}
+        <div className="flex justify-center items-center gap-3 mt-4">
+          {projects.map((project, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`group relative transition-all duration-300 ${
+                currentSlide === index
+                  ? 'scale-110'
+                  : 'opacity-60 hover:opacity-100'
+              }`}
+              aria-label={`Go to ${project.title}`}
+            >
+              <span className={`block w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+                currentSlide === index
+                  ? 'bg-primary ring-4 ring-primary/20'
+                  : 'bg-gray-300 hover:bg-gray-400'
+              }`} />
+              {/* Tooltip */}
+              <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-navDark text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                {project.title}
+              </span>
+            </button>
+          ))}
         </div>
       </div>
     </section>

@@ -1,5 +1,4 @@
 import Navbar from './components/layout/Navbar'
-import Footer from './components/layout/Footer'
 import Hero from './components/sections/Hero'
 import About from './components/sections/About'
 import Services from './components/sections/Services'
@@ -9,17 +8,28 @@ import Contact from './components/sections/Contact'
 
 function App() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="snap-container bg-white">
       <Navbar />
       <main>
-        <Hero />
-        <About />
-        <Services />
-        <Skills />
-        <Projects />
-        <Contact />
+        <section className="snap-section h-screen">
+          <Hero />
+        </section>
+        <section className="snap-section min-h-screen">
+          <About />
+        </section>
+        <section className="snap-section min-h-screen">
+          <Services />
+        </section>
+        <section className="snap-section min-h-screen">
+          <Skills />
+        </section>
+        <section className="snap-section min-h-screen">
+          <Projects />
+        </section>
+        <section className="snap-section min-h-screen">
+          <Contact />
+        </section>
       </main>
-      <Footer />
     </div>
   )
 }

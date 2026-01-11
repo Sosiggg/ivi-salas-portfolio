@@ -1,66 +1,212 @@
-import SectionTitle from '../common/SectionTitle'
-import Card from '../common/Card'
-import { Code, Layout, Smartphone, Database, Palette, Globe } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { ArrowLeft, ArrowRight, Code, Smartphone, Layout, Cpu, Server, Database } from 'lucide-react'
 
 const Services = () => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [cardsPerSlide, setCardsPerSlide] = useState(3)
+  
   const services = [
     {
-      icon: Layout,
+      icon: Code,
       title: 'Web Development',
-      description: 'Building responsive and modern websites using HTML, CSS, JavaScript, and React.js with a focus on clean code and best practices.',
+      description: 'Building responsive and modern websites using HTML, CSS, JavaScript, and React.js with clean, maintainable code.',
     },
     {
       icon: Smartphone,
       title: 'Responsive Design',
-      description: 'Creating websites that look and work beautifully on all devices, from mobile phones to desktop computers.',
+      description: 'Creating websites that look and work beautifully on all devices, from mobile to desktop and across different screen sizes.',
     },
     {
-      icon: Code,
-      title: 'Front-End Development',
-      description: 'Developing interactive user interfaces with modern frameworks and libraries for optimal user experience.',
+      icon: Layout,
+      title: 'UI/UX Design',
+      description: 'Designing intuitive and visually appealing user interfaces with focus on user experience and modern design principles.',
     },
     {
-      icon: Palette,
-      title: 'UI/UX Implementation',
-      description: 'Translating design mockups into functional, pixel-perfect web pages with attention to detail.',
+      icon: Cpu,
+      title: 'IoT Development',
+      description: 'Building Internet of Things solutions connecting hardware devices with software applications for smart systems.',
+    },
+    {
+      icon: Server,
+      title: 'Basic Backend',
+      description: 'Developing server-side functionality with basic API endpoints and backend logic to support web applications.',
     },
     {
       icon: Database,
-      title: 'Basic Back-End',
-      description: 'Understanding of server-side concepts and database management for full-stack development foundations.',
-    },
-    {
-      icon: Globe,
-      title: 'Web Optimization',
-      description: 'Optimizing websites for performance, accessibility, and search engine visibility.',
+      title: 'Database',
+      description: 'Setting up and managing simple databases for data storage, retrieval, basic CRUD operations, and writing efficient database queries.',
     },
   ]
 
-  return (
-    <section id="services" className="section-padding">
-      <div className="container-custom">
-        <SectionTitle
-          title="Services"
-          subtitle="Here's what I can offer to help bring your web projects to life."
-        />
+  // Update cards per slide based on screen size
+  useEffect(() => {
+    const updateCardsPerSlide = () => {
+      if (window.innerWidth < 640) {
+        setCardsPerSlide(1) // Mobile: 1 card
+      } else if (window.innerWidth < 1024) {
+        setCardsPerSlide(2) // Tablet: 2 cards
+      } else {
+        setCardsPerSlide(3) // Desktop: 3 cards
+      }
+    }
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
-            <Card
-              key={service.title}
-              className="group animate-fade-in-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="p-3 bg-primary/10 rounded-xl w-fit mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                <service.icon size={28} className="text-primary group-hover:text-white transition-colors" />
+    updateCardsPerSlide()
+    window.addEventListener('resize', updateCardsPerSlide)
+    return () => window.removeEventListener('resize', updateCardsPerSlide)
+  }, [])
+
+  // Reset slide when cards per slide changes
+  useEffect(() => {
+    setCurrentSlide(0)
+  }, [cardsPerSlide])
+
+  const totalSlides = Math.ceil(services.length / cardsPerSlide)
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides)
+  }
+
+  // Get current visible services
+  const getVisibleServices = (slideIndex) => {
+    const start = slideIndex * cardsPerSlide
+    return services.slice(start, start + cardsPerSlide)
+  }
+
+  return (
+    <section id="services" className="min-h-screen flex items-center justify-center p-3 xs:p-4 sm:p-6 md:p-8 lg:p-12 bg-white">
+      {/* Main container with background image - full height */}
+      <div 
+        className="relative w-full h-full min-h-[calc(100vh-24px)] xs:min-h-[calc(100vh-32px)] sm:min-h-[calc(100vh-48px)] md:min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-96px)] rounded-2xl sm:rounded-3xl overflow-hidden bg-cover bg-center bg-no-repeat flex flex-col"
+        style={{ backgroundImage: 'url(/servicesbg.png)' }}
+      >
+        {/* Subtle white film overlay */}
+        <div className="absolute inset-0 bg-white/10" />
+        {/* Dark overlay for better readability */}
+        <div className="absolute inset-0 bg-black/70" />
+        
+        {/* Content */}
+        <div className="relative z-10 flex flex-col h-full p-4 xs:p-5 sm:p-6 md:p-8 lg:p-12 xl:p-16">
+          {/* Header Section */}
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-4 xs:mb-5 sm:mb-6 md:mb-8 lg:mb-10">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-urbanist font-semibold text-white mb-2 xs:mb-3 sm:mb-4 lg:mb-0">
+              My Services
+            </h2>
+            <p className="text-gray-300 text-xs xs:text-sm md:text-base lg:text-lg max-w-lg lg:text-right leading-relaxed">
+              Transforming ideas into digital reality. I offer comprehensive web solutions tailored to your needs, from design to development.
+            </p>
+          </div>
+
+          {/* Carousel Container - takes remaining space */}
+          <div className="relative flex-1 flex flex-col px-0 sm:px-12 md:px-14 lg:px-16">
+            {/* Cards Container */}
+            <div className="overflow-hidden flex-1">
+              <div 
+                className="flex transition-transform duration-500 ease-out h-full"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+                  <div 
+                    key={slideIndex} 
+                    className="flex gap-3 xs:gap-4 md:gap-5 lg:gap-6 min-w-full h-full py-2"
+                  >
+                    {getVisibleServices(slideIndex).map((service, index) => (
+                      <ServiceCard key={service.title} service={service} index={index} />
+                    ))}
+                  </div>
+                ))}
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">{service.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{service.description}</p>
-            </Card>
-          ))}
+            </div>
+
+            {/* Navigation Arrows - positioned outside cards container */}
+            <button 
+              onClick={prevSlide}
+              className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 items-center justify-center z-20
+                w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-full
+                bg-white/5 border border-white/20 backdrop-blur-md
+                text-white/70 hover:text-white hover:bg-white/15 hover:border-white/40
+                transition-all duration-300 hover:scale-105"
+              aria-label="Previous slide"
+            >
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
+            </button>
+            <button 
+              onClick={nextSlide}
+              className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 items-center justify-center z-20
+                w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-full
+                bg-white/5 border border-white/20 backdrop-blur-md
+                text-white/70 hover:text-white hover:bg-white/15 hover:border-white/40
+                transition-all duration-300 hover:scale-105"
+              aria-label="Next slide"
+            >
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
+            </button>
+          </div>
+
+          {/* Pagination Dots */}
+          <div className="flex justify-center gap-2 sm:gap-3 mt-4 sm:mt-6 md:mt-8">
+            {Array.from({ length: totalSlides }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 ${
+                  currentSlide === index 
+                    ? 'w-8 sm:w-10 bg-primary' 
+                    : 'w-2 sm:w-2.5 bg-white/50 hover:bg-white/70'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
+  )
+}
+
+// Glass Card Component with clean rounded corner
+const ServiceCard = ({ service, index }) => {
+  const IconComponent = service.icon
+  
+  return (
+    <div 
+      className="flex-1 basis-0 min-w-0 animate-fade-in-up h-full"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      <div className="relative h-full group">
+        {/* Card with glass effect */}
+        <div className="service-card-glass h-full p-4 xs:p-5 sm:p-6 md:p-8 lg:p-10 flex flex-col">
+          {/* Icon with color change on hover */}
+          <div className="mb-3 xs:mb-4 md:mb-6 relative">
+            <div className="w-10 h-10 xs:w-12 xs:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl bg-white/10 flex items-center justify-center 
+              transition-colors duration-300 group-hover:bg-primary/20">
+              <IconComponent className="w-5 h-5 xs:w-6 xs:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-white/70 transition-colors duration-300 group-hover:text-primary" />
+            </div>
+          </div>
+          
+          {/* Title */}
+          <h3 className="text-lg xs:text-xl md:text-2xl lg:text-3xl font-urbanist font-semibold text-white mb-2 xs:mb-3 md:mb-4 transition-colors duration-300 group-hover:text-primary/90">
+            {service.title}
+          </h3>
+          
+          {/* Description */}
+          <p className="text-gray-400 text-xs xs:text-sm md:text-base leading-relaxed text-justify transition-colors duration-300 group-hover:text-gray-300">
+            {service.description}
+          </p>
+          
+          {/* Spacer */}
+          <div className="flex-1" />
+          
+          {/* Bottom hover indicator - subtle gradient line */}
+          <div className="mt-4 xs:mt-6 md:mt-8 relative overflow-hidden h-[2px] rounded-full bg-white/10">
+            <div className="absolute inset-y-0 left-0 w-0 bg-gradient-to-r from-primary to-primary/50 rounded-full transition-all duration-500 ease-out group-hover:w-full" />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

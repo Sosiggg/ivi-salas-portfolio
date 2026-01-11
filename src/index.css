@@ -11,6 +11,27 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Scroll snap container - smoother snapping */
+.snap-container {
+  scroll-snap-type: y proximity;
+  overflow-y: scroll;
+  height: 100vh;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Webkit smooth scroll timing */
+@supports (scroll-behavior: smooth) {
+  .snap-container {
+    scroll-behavior: smooth;
+  }
+}
+
+.snap-section {
+  scroll-snap-align: start;
 }
 
 body {
@@ -18,47 +39,88 @@ body {
   background-color: #ffffff;
   color: #1e293b;
   line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Lufga font fallback - if font files not available, use similar fonts */
+.font-lufga {
+  font-family: 'Lufga', 'Poppins', 'Inter', sans-serif;
+}
+
+/* Glass effect container for Portfolio/Hire me buttons */
+.glass-container {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Glass card for services section */
+.service-card-glass {
+  background: linear-gradient(160deg, rgba(45, 45, 55, 0.7) 0%, rgba(25, 25, 35, 0.9) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.service-card-glass:hover {
+  background: linear-gradient(160deg, rgba(55, 55, 65, 0.85) 0%, rgba(35, 35, 45, 0.95) 100%);
+  border-color: rgba(71, 114, 177, 0.3);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(71, 114, 177, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.service-card-glass:hover::before {
+  opacity: 1;
+  background: linear-gradient(135deg, rgba(71, 114, 177, 0.05) 0%, transparent 50%);
 }
 
 /* Custom Utility Classes */
 @layer components {
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8;
   }
 
   .section-padding {
-    @apply py-16 md:py-20 lg:py-24;
+    @apply py-12 sm:py-16 md:py-20 lg:py-24;
   }
 
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-800 rounded-full font-medium 
-           shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5;
+    @apply inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-primary text-white rounded-full font-medium 
+           shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 text-sm sm:text-base;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 px-6 py-3 bg-accent-dark text-white rounded-full font-medium 
-           hover:bg-gray-700 transition-all duration-300;
+    @apply inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-navDark text-white rounded-full font-medium 
+           hover:bg-gray-700 transition-all duration-300 text-sm sm:text-base;
   }
 
   .heading-primary {
-    @apply text-4xl md:text-5xl lg:text-6xl font-serif font-medium leading-tight;
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-urbanist font-semibold leading-tight;
   }
 
   .heading-secondary {
-    @apply text-3xl md:text-4xl font-serif font-medium;
+    @apply text-2xl sm:text-3xl md:text-4xl font-urbanist font-semibold;
   }
-
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent;
-  }
-}
-
-/* Decorative Elements */
-.quote-mark {
-  font-family: 'Playfair Display', serif;
-  font-size: 4rem;
-  color: #4A7C9B;
-  line-height: 1;
 }
 
 /* Animations */
@@ -92,7 +154,13 @@ body {
 
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+}
+
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
 }
 
 ::-webkit-scrollbar-track {
@@ -100,10 +168,15 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4A7C9B;
+  background: #4772B1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3d6a85;
+  background: #3a5f94;
+}
+
+/* Prevent horizontal scroll on mobile */
+.overflow-x-clip {
+  overflow-x: clip;
 }

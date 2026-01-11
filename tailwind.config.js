@@ -5,21 +5,28 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      'xs': '375px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#4A7C9B',
-          dark: '#1e293b',
-          light: '#5B8FB0',
-        },
-        accent: {
-          blue: '#4A7C9B',
-          dark: '#1e2939',
-        }
+        primary: '#4772B1',
+        secondary: '#344054',
+        navDark: '#171717',
+        accent: '#E8F4F8',
+        dark: '#1A202C',
+        light: '#F7FAFC',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['Playfair Display', 'Georgia', 'serif'],
+        montserrat: ['Montserrat', 'sans-serif'],
+        urbanist: ['Urbanist', 'sans-serif'],
+        lufga: ['Lufga', 'Poppins', 'sans-serif'],
       },
     },
   },
