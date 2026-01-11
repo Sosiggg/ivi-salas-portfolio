@@ -37,28 +37,17 @@ const Hero = () => {
 
         {/* CTA Buttons */}
         <div className="mt-6 xs:mt-8 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-          <div className="flex items-center glass-container rounded-full p-1 shadow-xl">
-            <a 
-              href="#projects"
-              className="flex items-center justify-center gap-1.5 xs:gap-2 bg-primary text-white font-lufga font-bold 
-                text-xs xs:text-sm 
-                px-4 xs:px-5 sm:px-6 
-                py-2 xs:py-2.5 sm:py-3 
-                rounded-full transition-all duration-300 hover:bg-primary/90"
-            >
-              Portfolio
-              <ArrowUpRight className="w-3.5 h-3.5 xs:w-4 xs:h-4" strokeWidth={2.5} />
-            </a>
-            <span
-              className="flex-1 text-center font-lufga font-light text-white/80 
-                text-xs xs:text-sm 
-                px-4 xs:px-5 sm:px-6 
-                py-2 xs:py-2.5 sm:py-3 
-                whitespace-nowrap cursor-default select-none"
-            >
-              Hire me
-            </span>
-          </div>
+          <a 
+            href="#projects"
+            className="inline-flex items-center justify-center gap-1.5 xs:gap-2 bg-primary text-white font-lufga font-bold 
+              text-xs xs:text-sm 
+              px-5 xs:px-6 sm:px-7 
+              py-2.5 xs:py-3 sm:py-3.5 
+              rounded-full transition-all duration-300 hover:bg-primary/90 shadow-xl"
+          >
+            Portfolio
+            <ArrowUpRight className="w-3.5 h-3.5 xs:w-4 xs:h-4" strokeWidth={2.5} />
+          </a>
         </div>
 
         {/* Mobile Info */}
