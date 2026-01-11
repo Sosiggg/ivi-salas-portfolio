@@ -104,43 +104,43 @@ const Projects = () => {
   const currentProject = projects[currentSlide]
 
   return (
-    <section id="projects" className="h-screen flex flex-col justify-center pt-20 pb-4 sm:pt-24 sm:pb-6 lg:pt-28 lg:pb-8 bg-gray-50 overflow-hidden">
-      <div className="container-custom h-full flex flex-col justify-center">
+    <section id="projects" className="min-h-screen flex flex-col justify-center py-16 pt-20 sm:pt-24 lg:pt-28 bg-gray-50 overflow-hidden">
+      <div className="container-custom flex flex-col">
         {/* Section Header */}
         <div className="text-center mb-4 sm:mb-6 flex-shrink-0">
-          <div className="inline-flex items-center gap-3 mb-2">
-            <span className="h-px w-8 sm:w-12 bg-primary"></span>
-            <span className="text-primary text-sm sm:text-base font-semibold tracking-widest uppercase">My Work</span>
-            <span className="h-px w-8 sm:w-12 bg-primary"></span>
+          <div className="inline-flex items-center gap-2 sm:gap-3 mb-2">
+            <span className="h-px w-6 sm:w-8 md:w-12 bg-primary"></span>
+            <span className="text-primary text-xs sm:text-sm md:text-base font-semibold tracking-widest uppercase">My Work</span>
+            <span className="h-px w-6 sm:w-8 md:w-12 bg-primary"></span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-urbanist font-bold text-navDark">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-urbanist font-bold text-navDark">
             Projects
           </h2>
         </div>
 
         {/* Single Project Display */}
-        <div className="relative flex-1 min-h-0 flex items-center">
+        <div className="relative flex items-center">
           {/* Navigation Arrows */}
           <button
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center text-secondary hover:border-primary hover:text-primary hover:shadow-xl hover:-translate-y-1/2 hover:scale-110 transition-all duration-300 shadow-md"
+            className="absolute left-0 sm:left-1 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center text-secondary hover:border-primary hover:text-primary hover:shadow-xl hover:-translate-y-1/2 hover:scale-110 transition-all duration-300 shadow-md"
           >
-            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
           </button>
           
           <button
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center text-secondary hover:border-primary hover:text-primary hover:shadow-xl hover:-translate-y-1/2 hover:scale-110 transition-all duration-300 shadow-md"
+            className="absolute right-0 sm:right-1 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center text-secondary hover:border-primary hover:text-primary hover:shadow-xl hover:-translate-y-1/2 hover:scale-110 transition-all duration-300 shadow-md"
           >
-            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
           </button>
 
           {/* Project Content */}
-          <div className="w-full px-14 sm:px-20">
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden h-[540px] sm:h-[520px] lg:h-[500px]">
-              <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
+          <div className="w-full px-10 sm:px-14 md:px-20">
+            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-2">
                 {/* Project Image */}
-                <div className="relative group overflow-hidden h-60 sm:h-64 lg:h-full">
+                <div className="relative group overflow-hidden h-48 sm:h-56 md:h-64 lg:h-auto lg:min-h-[400px]">
                   <img
                     src={currentProject.image}
                     alt={currentProject.title}
@@ -151,48 +151,48 @@ const Projects = () => {
                 </div>
 
                 {/* Project Info */}
-                <div className="p-4 sm:p-5 lg:p-6 flex flex-col justify-between overflow-hidden">
+                <div className="p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col justify-between">
                   <div>
-                    <div className="mb-1">
-                      <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-semibold uppercase tracking-wider rounded-full">
+                    <div className="mb-2">
+                      <span className="inline-block px-2 sm:px-3 py-1 bg-primary/10 text-primary text-[10px] sm:text-xs md:text-sm font-semibold uppercase tracking-wider rounded-full">
                         {currentProject.subtitle}
                       </span>
                     </div>
-                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-urbanist font-bold text-navDark mb-3">
+                    <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-urbanist font-bold text-navDark mb-2 sm:mb-3">
                       {currentProject.title}
                     </h3>
-                      <p className="text-secondary text-base leading-relaxed mb-5 text-justify">
+                    <p className="text-secondary text-xs sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4 text-justify line-clamp-3 sm:line-clamp-none">
                       {currentProject.description}
                     </p>
 
                     {/* Features */}
-                    <div className="mb-3">
-                      <h4 className="text-xs font-bold text-navDark mb-1.5 uppercase tracking-wide">Key Features</h4>
-                      <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+                    <div className="mb-3 sm:mb-4">
+                      <h4 className="text-[10px] sm:text-xs font-bold text-navDark mb-1 sm:mb-1.5 uppercase tracking-wide">Key Features</h4>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 sm:gap-x-3 gap-y-1 sm:gap-y-1.5">
                         {currentProject.features.slice(0, 4).map((feature, index) => (
-                          <li key={index} className="flex items-start gap-2 text-secondary text-sm leading-snug">
-                            <svg className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <li key={index} className="flex items-start gap-1.5 sm:gap-2 text-secondary text-[10px] sm:text-xs md:text-sm leading-snug">
+                            <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
-                            <span>{feature}</span>
+                            <span className="line-clamp-1 sm:line-clamp-none">{feature}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
                     {/* Technologies */}
-                    <div className="mb-4">
-                      <div className="flex flex-wrap gap-1.5">
+                    <div className="mb-3 sm:mb-4">
+                      <div className="flex flex-wrap gap-1 sm:gap-1.5">
                         {currentProject.technologies.slice(0, 5).map((tech) => (
                           <span
                             key={tech}
-                            className="px-2.5 py-1 bg-gray-100 text-secondary text-xs font-medium rounded-md border border-gray-200"
+                            className="px-2 sm:px-2.5 py-0.5 sm:py-1 bg-gray-100 text-secondary text-[10px] sm:text-xs font-medium rounded-md border border-gray-200"
                           >
                             {tech}
                           </span>
                         ))}
                         {currentProject.technologies.length > 5 && (
-                          <span className="px-2.5 py-1 bg-gray-100 text-secondary text-xs font-medium rounded-md border border-gray-200">
+                          <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 bg-gray-100 text-secondary text-[10px] sm:text-xs font-medium rounded-md border border-gray-200">
                             +{currentProject.technologies.length - 5}
                           </span>
                         )}
@@ -206,11 +206,11 @@ const Projects = () => {
                       href={currentProject.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group/btn inline-flex items-center gap-2 px-4 py-2 bg-navDark text-white text-xs font-semibold rounded-lg hover:bg-primary hover:shadow-lg hover:shadow-primary/25 transition-all duration-300"
+                      className="group/btn inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-navDark text-white text-[10px] sm:text-xs md:text-sm font-semibold rounded-lg hover:bg-primary hover:shadow-lg hover:shadow-primary/25 transition-all duration-300"
                     >
-                      <Github className="w-4 h-4" />
+                      <Github className="w-3 h-3 sm:w-4 sm:h-4" />
                       View on GitHub
-                      <svg className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </a>
@@ -222,7 +222,7 @@ const Projects = () => {
         </div>
 
         {/* Pagination Dots with Project Names */}
-        <div className="flex justify-center items-center gap-3 mt-4">
+        <div className="flex justify-center items-center gap-2 sm:gap-3 mt-4 sm:mt-6">
           {projects.map((project, index) => (
             <button
               key={index}
@@ -234,13 +234,13 @@ const Projects = () => {
               }`}
               aria-label={`Go to ${project.title}`}
             >
-              <span className={`block w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+              <span className={`block w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
                 currentSlide === index
-                  ? 'bg-primary ring-4 ring-primary/20'
+                  ? 'bg-primary ring-2 sm:ring-4 ring-primary/20'
                   : 'bg-gray-300 hover:bg-gray-400'
               }`} />
               {/* Tooltip */}
-              <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-navDark text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+              <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-navDark text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none hidden sm:block">
                 {project.title}
               </span>
             </button>
