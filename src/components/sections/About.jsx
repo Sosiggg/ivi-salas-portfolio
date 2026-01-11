@@ -132,7 +132,7 @@ const About = () => {
                   </svg>
                 </a>
                 <a 
-                  href="/Salas_Ivi-Susej-Marie_CV.pdf" 
+                  href="/IviSalas_CV.pdf" 
                   download
                   className="group inline-flex items-center gap-2 px-6 py-3 bg-white text-navDark text-sm font-semibold rounded-lg border-2 border-navDark hover:bg-navDark hover:text-white hover:shadow-lg hover:shadow-navDark/25 hover:-translate-y-0.5 transition-all duration-300"
                 >
