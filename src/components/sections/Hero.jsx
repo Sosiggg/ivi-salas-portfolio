@@ -49,15 +49,6 @@ const Hero = () => {
             <ArrowUpRight className="w-3.5 h-3.5 xs:w-4 xs:h-4" strokeWidth={2.5} />
           </a>
         </div>
-
-        {/* Mobile Info */}
-        <div className="mt-6 xs:mt-8 text-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-          <p className="text-secondary font-montserrat text-xs xs:text-sm leading-relaxed mb-2 max-w-xs mx-auto">
-            Passionate about building user-friendly and responsive websites.
-          </p>
-          <p className="font-montserrat font-bold text-gray-800 text-xs xs:text-sm">BS in Information Technology</p>
-          <p className="font-montserrat text-gray-500 text-xs xs:text-sm">Dean's Lister</p>
-        </div>
       </div>
 
       {/* Desktop Layout - Original with half circle at bottom */}
