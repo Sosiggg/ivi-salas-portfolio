@@ -1,4 +1,0 @@
-Alembic migrations directory.
-
-Use: alembic revision --autogenerate -m "description"
-Then: alembic upgrade head
