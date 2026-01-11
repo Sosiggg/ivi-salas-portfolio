@@ -77,7 +77,7 @@ const Services = () => {
   }
 
   return (
-    <section id="services" className="min-h-screen flex items-center justify-center pt-20 pb-4 px-3 xs:pt-24 xs:pb-4 xs:px-4 sm:pt-6 sm:pb-6 sm:px-6 md:p-8 lg:p-12 bg-white">
+    <section id="services" className="lg:min-h-screen flex items-center justify-center pt-20 pb-4 px-3 xs:pt-24 xs:pb-4 xs:px-4 sm:pt-6 sm:pb-6 sm:px-6 md:p-8 lg:p-12 bg-white">
       {/* Main container with background image */}
       <div 
         className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-cover bg-center bg-no-repeat flex flex-col"
