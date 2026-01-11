@@ -1,8 +1,35 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Github, ArrowLeft, ArrowRight } from 'lucide-react'
 
 const Projects = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
+  
+  // Touch/swipe handling
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    const swipeThreshold = 50
+    const diff = touchStartX.current - touchEndX.current
+    
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swiped left - go to next slide
+        nextSlide()
+      } else {
+        // Swiped right - go to previous slide
+        prevSlide()
+      }
+    }
+  }
 
   const projects = [
     {
@@ -119,7 +146,12 @@ const Projects = () => {
         </div>
 
         {/* Single Project Display */}
-        <div className="relative flex items-center">
+        <div 
+          className="relative flex items-center touch-pan-y"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           {/* Navigation Arrows */}
           <button
             onClick={prevSlide}

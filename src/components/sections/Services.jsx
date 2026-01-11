@@ -1,9 +1,37 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { ArrowLeft, ArrowRight, Code, Smartphone, Layout, Cpu, Server, Database } from 'lucide-react'
 
 const Services = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [cardsPerSlide, setCardsPerSlide] = useState(3)
+  
+  // Touch/swipe handling
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
+  const carouselRef = useRef(null)
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    const swipeThreshold = 50
+    const diff = touchStartX.current - touchEndX.current
+    
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swiped left - go to next slide
+        nextSlide()
+      } else {
+        // Swiped right - go to previous slide
+        prevSlide()
+      }
+    }
+  }
   
   const services = [
     {
@@ -103,7 +131,13 @@ const Services = () => {
           {/* Carousel Container */}
           <div className="relative flex flex-col px-0 sm:px-12 md:px-14 lg:px-16">
             {/* Cards Container */}
-            <div className="overflow-hidden">
+            <div 
+              ref={carouselRef}
+              className="overflow-hidden touch-pan-y"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               <div 
                 className="flex transition-transform duration-500 ease-out"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
