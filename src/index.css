@@ -195,8 +195,10 @@ body {
     opacity: 0;
   }
   
-  /* Disable all transform hover effects */
-  *:hover {
+  /* Disable hover transform effects on interactive elements */
+  a:hover,
+  button:hover,
+  .group:hover {
     transform: none !important;
   }
   

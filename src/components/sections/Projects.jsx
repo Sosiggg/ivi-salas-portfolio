@@ -4,32 +4,9 @@ import { Github, ArrowLeft, ArrowRight } from 'lucide-react'
 const Projects = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
   
-  // Touch/swipe handling
+  // Touch/swipe handling refs
   const touchStartX = useRef(0)
   const touchEndX = useRef(0)
-
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX
-  }
-
-  const handleTouchMove = (e) => {
-    touchEndX.current = e.touches[0].clientX
-  }
-
-  const handleTouchEnd = () => {
-    const swipeThreshold = 50
-    const diff = touchStartX.current - touchEndX.current
-    
-    if (Math.abs(diff) > swipeThreshold) {
-      if (diff > 0) {
-        // Swiped left - go to next slide
-        nextSlide()
-      } else {
-        // Swiped right - go to previous slide
-        prevSlide()
-      }
-    }
-  }
 
   const projects = [
     {
@@ -128,6 +105,31 @@ const Projects = () => {
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides)
   }
 
+  // Touch/swipe handlers - defined after nextSlide/prevSlide
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX
+    touchEndX.current = e.touches[0].clientX // Reset end position
+  }
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    const swipeThreshold = 50
+    const diff = touchStartX.current - touchEndX.current
+    
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swiped left - go to next slide
+        nextSlide()
+      } else {
+        // Swiped right - go to previous slide
+        prevSlide()
+      }
+    }
+  }
+
   const currentProject = projects[currentSlide]
 
   return (
@@ -147,7 +149,8 @@ const Projects = () => {
 
         {/* Single Project Display */}
         <div 
-          className="relative flex items-center touch-pan-y"
+          className="relative flex items-center"
+          style={{ touchAction: 'pan-y pinch-zoom' }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}

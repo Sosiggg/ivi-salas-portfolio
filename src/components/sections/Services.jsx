@@ -5,33 +5,10 @@ const Services = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [cardsPerSlide, setCardsPerSlide] = useState(3)
   
-  // Touch/swipe handling
+  // Touch/swipe handling refs
   const touchStartX = useRef(0)
   const touchEndX = useRef(0)
   const carouselRef = useRef(null)
-
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX
-  }
-
-  const handleTouchMove = (e) => {
-    touchEndX.current = e.touches[0].clientX
-  }
-
-  const handleTouchEnd = () => {
-    const swipeThreshold = 50
-    const diff = touchStartX.current - touchEndX.current
-    
-    if (Math.abs(diff) > swipeThreshold) {
-      if (diff > 0) {
-        // Swiped left - go to next slide
-        nextSlide()
-      } else {
-        // Swiped right - go to previous slide
-        prevSlide()
-      }
-    }
-  }
   
   const services = [
     {
@@ -98,6 +75,31 @@ const Services = () => {
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides)
   }
 
+  // Touch/swipe handlers - defined after nextSlide/prevSlide
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX
+    touchEndX.current = e.touches[0].clientX // Reset end position
+  }
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    const swipeThreshold = 50
+    const diff = touchStartX.current - touchEndX.current
+    
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swiped left - go to next slide
+        nextSlide()
+      } else {
+        // Swiped right - go to previous slide
+        prevSlide()
+      }
+    }
+  }
+
   // Get current visible services
   const getVisibleServices = (slideIndex) => {
     const start = slideIndex * cardsPerSlide
@@ -133,7 +135,8 @@ const Services = () => {
             {/* Cards Container */}
             <div 
               ref={carouselRef}
-              className="overflow-hidden touch-pan-y"
+              className="overflow-hidden"
+              style={{ touchAction: 'pan-y pinch-zoom' }}
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
