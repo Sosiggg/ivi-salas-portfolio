@@ -180,3 +180,38 @@ body {
 .overflow-x-clip {
   overflow-x: clip;
 }
+
+/* Disable hover animations on touch devices */
+@media (hover: none) {
+  /* Service cards */
+  .service-card-glass:hover {
+    transform: none;
+    background: linear-gradient(160deg, rgba(45, 45, 55, 0.8) 0%, rgba(25, 25, 35, 0.9) 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  
+  .service-card-glass:hover::before {
+    opacity: 0;
+  }
+  
+  /* Disable all transform hover effects */
+  *:hover {
+    transform: none !important;
+  }
+  
+  /* Reset group-hover states */
+  .group:hover .group-hover\:scale-105,
+  .group:hover .group-hover\:scale-110,
+  .group:hover .group-hover\:rotate-3,
+  .group:hover .group-hover\:-translate-y-1,
+  .group:hover .group-hover\:translate-x-0\.5,
+  .group:hover .group-hover\:-translate-y-0\.5 {
+    transform: none !important;
+  }
+  
+  /* Keep opacity changes but disable transforms */
+  .group:hover .group-hover\:opacity-100 {
+    opacity: 1;
+  }
+}
