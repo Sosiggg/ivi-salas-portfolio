@@ -173,9 +173,9 @@ const Projects = () => {
           {/* Project Content */}
           <div className="w-full px-10 sm:px-14 md:px-20">
             <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="grid grid-cols-1 lg:grid-cols-2">
+              <div className="grid grid-cols-1 lg:grid-cols-2 h-[420px] sm:h-[450px] md:h-[480px] lg:h-[420px]">
                 {/* Project Image */}
-                <div className="relative group overflow-hidden h-48 sm:h-56 md:h-64 lg:h-auto lg:min-h-[400px]">
+                <div className="relative group overflow-hidden h-40 sm:h-44 md:h-48 lg:h-full">
                   <img
                     src={currentProject.image}
                     alt={currentProject.title}
@@ -186,17 +186,17 @@ const Projects = () => {
                 </div>
 
                 {/* Project Info */}
-                <div className="p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col justify-between">
-                  <div>
+                <div className="p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col h-[280px] sm:h-[306px] md:h-[332px] lg:h-full overflow-hidden">
+                  <div className="flex-1 min-h-0 overflow-hidden">
                     <div className="mb-2">
                       <span className="inline-block px-2 sm:px-3 py-1 bg-primary/10 text-primary text-[10px] sm:text-xs md:text-sm font-semibold uppercase tracking-wider rounded-full">
                         {currentProject.subtitle}
                       </span>
                     </div>
-                    <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-urbanist font-bold text-navDark mb-2 sm:mb-3">
+                    <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-urbanist font-bold text-navDark mb-2 sm:mb-3 line-clamp-1">
                       {currentProject.title}
                     </h3>
-                    <p className="text-secondary text-xs sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4 text-justify line-clamp-3 sm:line-clamp-none">
+                    <p className="text-secondary text-xs sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4 text-justify line-clamp-2 sm:line-clamp-3">
                       {currentProject.description}
                     </p>
 
@@ -209,7 +209,7 @@ const Projects = () => {
                             <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
-                            <span className="line-clamp-1 sm:line-clamp-none">{feature}</span>
+                            <span className="line-clamp-1">{feature}</span>
                           </li>
                         ))}
                       </ul>
@@ -236,7 +236,7 @@ const Projects = () => {
                   </div>
 
                   {/* GitHub Button */}
-                  <div>
+                  <div className="flex-shrink-0 pt-2">
                     <a
                       href={currentProject.githubUrl}
                       target="_blank"
