@@ -172,10 +172,87 @@ const Projects = () => {
 
           {/* Project Content */}
           <div className="w-full px-10 sm:px-14 md:px-20">
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="grid grid-cols-1 lg:grid-cols-2 h-[480px] sm:h-[520px] md:h-[560px] lg:h-[480px]">
+            {/* Mobile: Entire card is clickable */}
+            <a 
+              href={currentProject.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block sm:hidden bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden active:scale-[0.98] transition-transform"
+            >
+              <div className="grid grid-cols-1 h-[480px]">
                 {/* Project Image */}
-                <div className="relative group overflow-hidden h-44 sm:h-52 md:h-56 lg:h-full">
+                <div className="relative overflow-hidden h-44">
+                  <img
+                    src={currentProject.image}
+                    alt={currentProject.title}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+
+                {/* Project Info */}
+                <div className="p-4 flex flex-col h-[336px] overflow-hidden">
+                  <div className="flex-1 min-h-0 overflow-hidden">
+                    <div className="mb-2">
+                      <span className="inline-block px-2 py-1 bg-primary/10 text-primary text-[10px] font-semibold uppercase tracking-wider rounded-full">
+                        {currentProject.subtitle}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-urbanist font-bold text-navDark mb-2 line-clamp-1">
+                      {currentProject.title}
+                    </h3>
+                    <p className="text-secondary text-xs leading-relaxed mb-3 text-justify line-clamp-2">
+                      {currentProject.description}
+                    </p>
+
+                    {/* Features */}
+                    <div className="mb-3">
+                      <h4 className="text-[10px] font-bold text-navDark mb-1 uppercase tracking-wide">Key Features</h4>
+                      <ul className="grid grid-cols-1 gap-y-1">
+                        {currentProject.features.slice(0, 4).map((feature, index) => (
+                          <li key={index} className="flex items-start gap-1.5 text-secondary text-[10px] leading-snug">
+                            <svg className="w-2.5 h-2.5 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                            <span className="line-clamp-1">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Technologies */}
+                    <div className="mb-3">
+                      <div className="flex flex-wrap gap-1">
+                        {currentProject.technologies.slice(0, 5).map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2 py-0.5 bg-gray-100 text-secondary text-[10px] font-medium rounded-md border border-gray-200"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                        {currentProject.technologies.length > 5 && (
+                          <span className="px-2 py-0.5 bg-gray-100 text-secondary text-[10px] font-medium rounded-md border border-gray-200">
+                            +{currentProject.technologies.length - 5}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Tap to view indicator */}
+                  <div className="flex-shrink-0 pt-2 flex items-center justify-center gap-1.5 text-primary text-[10px] font-medium">
+                    <Github className="w-3 h-3" />
+                    <span>Tap to view on GitHub</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            {/* Desktop: Regular card with button */}
+            <div className="hidden sm:block bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-2 h-[520px] md:h-[560px] lg:h-[480px]">
+                {/* Project Image */}
+                <div className="relative group overflow-hidden h-52 md:h-56 lg:h-full">
                   <img
                     src={currentProject.image}
                     alt={currentProject.title}
@@ -186,27 +263,27 @@ const Projects = () => {
                 </div>
 
                 {/* Project Info */}
-                <div className="p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col h-[336px] sm:h-[368px] md:h-[404px] lg:h-full overflow-hidden">
+                <div className="p-5 md:p-6 lg:p-8 flex flex-col h-[368px] md:h-[404px] lg:h-full overflow-hidden">
                   <div className="flex-1 min-h-0 overflow-hidden">
                     <div className="mb-2">
-                      <span className="inline-block px-2 sm:px-3 py-1 bg-primary/10 text-primary text-[10px] sm:text-xs md:text-sm font-semibold uppercase tracking-wider rounded-full">
+                      <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs md:text-sm font-semibold uppercase tracking-wider rounded-full">
                         {currentProject.subtitle}
                       </span>
                     </div>
-                    <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-urbanist font-bold text-navDark mb-2 sm:mb-3 line-clamp-1">
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-urbanist font-bold text-navDark mb-3 line-clamp-1">
                       {currentProject.title}
                     </h3>
-                    <p className="text-secondary text-xs sm:text-sm md:text-base leading-relaxed mb-3 sm:mb-4 text-justify line-clamp-2 sm:line-clamp-3">
+                    <p className="text-secondary text-sm md:text-base leading-relaxed mb-4 text-justify line-clamp-3">
                       {currentProject.description}
                     </p>
 
                     {/* Features */}
-                    <div className="mb-3 sm:mb-4">
-                      <h4 className="text-[10px] sm:text-xs font-bold text-navDark mb-1 sm:mb-1.5 uppercase tracking-wide">Key Features</h4>
-                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 sm:gap-x-3 gap-y-1 sm:gap-y-1.5">
+                    <div className="mb-4">
+                      <h4 className="text-xs font-bold text-navDark mb-1.5 uppercase tracking-wide">Key Features</h4>
+                      <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5">
                         {currentProject.features.slice(0, 4).map((feature, index) => (
-                          <li key={index} className="flex items-start gap-1.5 sm:gap-2 text-secondary text-[10px] sm:text-xs md:text-sm leading-snug">
-                            <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <li key={index} className="flex items-start gap-2 text-secondary text-xs md:text-sm leading-snug">
+                            <svg className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
                             <span className="line-clamp-1">{feature}</span>
@@ -216,18 +293,18 @@ const Projects = () => {
                     </div>
 
                     {/* Technologies */}
-                    <div className="mb-3 sm:mb-4">
-                      <div className="flex flex-wrap gap-1 sm:gap-1.5">
+                    <div className="mb-4">
+                      <div className="flex flex-wrap gap-1.5">
                         {currentProject.technologies.slice(0, 5).map((tech) => (
                           <span
                             key={tech}
-                            className="px-2 sm:px-2.5 py-0.5 sm:py-1 bg-gray-100 text-secondary text-[10px] sm:text-xs font-medium rounded-md border border-gray-200"
+                            className="px-2.5 py-1 bg-gray-100 text-secondary text-xs font-medium rounded-md border border-gray-200"
                           >
                             {tech}
                           </span>
                         ))}
                         {currentProject.technologies.length > 5 && (
-                          <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 bg-gray-100 text-secondary text-[10px] sm:text-xs font-medium rounded-md border border-gray-200">
+                          <span className="px-2.5 py-1 bg-gray-100 text-secondary text-xs font-medium rounded-md border border-gray-200">
                             +{currentProject.technologies.length - 5}
                           </span>
                         )}
@@ -241,11 +318,11 @@ const Projects = () => {
                       href={currentProject.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group/btn inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-navDark text-white text-[10px] sm:text-xs md:text-sm font-semibold rounded-lg hover:bg-primary hover:shadow-lg hover:shadow-primary/25 transition-all duration-300"
+                      className="group/btn inline-flex items-center gap-2 px-4 py-2 bg-navDark text-white text-xs md:text-sm font-semibold rounded-lg hover:bg-primary hover:shadow-lg hover:shadow-primary/25 transition-all duration-300"
                     >
-                      <Github className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <Github className="w-4 h-4" />
                       View on GitHub
-                      <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </a>
