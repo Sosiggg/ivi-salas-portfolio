@@ -173,9 +173,9 @@ const Projects = () => {
           {/* Project Content */}
           <div className="w-full px-10 sm:px-14 md:px-20">
             <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="grid grid-cols-1 lg:grid-cols-2 h-[420px] sm:h-[450px] md:h-[480px] lg:h-[420px]">
+              <div className="grid grid-cols-1 lg:grid-cols-2 h-[480px] sm:h-[520px] md:h-[560px] lg:h-[480px]">
                 {/* Project Image */}
-                <div className="relative group overflow-hidden h-40 sm:h-44 md:h-48 lg:h-full">
+                <div className="relative group overflow-hidden h-44 sm:h-52 md:h-56 lg:h-full">
                   <img
                     src={currentProject.image}
                     alt={currentProject.title}
@@ -186,7 +186,7 @@ const Projects = () => {
                 </div>
 
                 {/* Project Info */}
-                <div className="p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col h-[280px] sm:h-[306px] md:h-[332px] lg:h-full overflow-hidden">
+                <div className="p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col h-[336px] sm:h-[368px] md:h-[404px] lg:h-full overflow-hidden">
                   <div className="flex-1 min-h-0 overflow-hidden">
                     <div className="mb-2">
                       <span className="inline-block px-2 sm:px-3 py-1 bg-primary/10 text-primary text-[10px] sm:text-xs md:text-sm font-semibold uppercase tracking-wider rounded-full">
