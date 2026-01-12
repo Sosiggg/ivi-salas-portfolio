@@ -25,7 +25,7 @@ const Projects = () => {
     },
     {
       title: 'TORI',
-      subtitle: 'Collaborative Inventory Management System',
+      subtitle: 'Collaborative IMS',
       description: 'A collaborative inventory management system designed for small businesses and vendors sharing booth spaces at events. It features role-based access for multiple sellers, mobile accessibility, cost-splitting, and automatic sales tracking.',
       features: [
         'Mobile accessibility optimized for smartphones',
