@@ -98,7 +98,7 @@ const About = () => {
                   Hello, I'm Ivi Salas!
                 </h3>
                 <p className="text-secondary text-xs sm:text-sm md:text-base leading-relaxed text-justify">
-                  An aspiring web developer currently pursuing my <span className="font-semibold text-navDark">Bachelor of Science in Information Technology</span>. I am passionate about creating beautiful, functional, and user-centered digital experiences. My journey in web development started with curiosity and has grown into a deep commitment to mastering front-end technologies.
+                   I am a <span className="font-semibold text-navDark">Frontend Developer</span> and Technical Specialist with a <span className="font-semibold text-navDark">Bachelor of Science in Information Technology</span>, graduating with <span className="font-semibold text-navDark">Latin Honors (Cum Laude)</span> and earning <span className="font-semibold text-navDark">Honor Graduate Eligibility (Civil Service Eligibility)</span>. I am passionate about creating beautiful, responsive, and user-centered digital experiences that combine clean design with intuitive functionality. My experience includes developing modern web applications, ERPNext/Frappe solutions, and visually polished landing pages for multiple schools, with a strong focus on frontend development using React, Vue.js, TypeScript, Tailwind CSS, HTML, and CSS. 
                 </p>
               </div>
 

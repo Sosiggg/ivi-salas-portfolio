@@ -31,7 +31,7 @@ const Hero = () => {
             I'm <span className="text-primary">Ivi Susej Marie E. Salas</span>,
           </h1>
           <p className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-urbanist font-semibold text-gray-800">
-            Aspiring Web Developer
+            Frontend Developer
           </p>
         </div>
 
@@ -69,7 +69,7 @@ const Hero = () => {
               <span className="text-primary">Ivi Susej Marie E. Salas</span>,
             </h1>
             <p className="text-3xl xl:text-4xl 2xl:text-5xl font-urbanist font-semibold text-gray-800 leading-[1.15]">
-              Aspiring Web Developer
+              Frontend Developer
             </p>
           </div>
         </div>
@@ -95,7 +95,7 @@ const Hero = () => {
               <div className="flex flex-col items-end justify-center animate-fade-in-up pt-16 xl:pt-20" style={{ animationDelay: '0.4s' }}>
                 <div className="text-right">
                   <p className="font-montserrat font-bold text-gray-800 text-sm xl:text-base">BS in Information Technology</p>
-                  <p className="font-montserrat text-gray-500 text-xs xl:text-sm">Dean's Lister</p>
+                  <p className="font-montserrat text-gray-500 text-xs xl:text-sm">Latin Honor - Cum Laude</p>
                 </div>
               </div>
             </div>
@@ -114,7 +114,7 @@ const Hero = () => {
             {/* Profile Image */}
             <img 
               src="/profile.png" 
-              alt="Ivi Susej Marie E. Salas - Aspiring Web Developer" 
+              alt="Ivi Susej Marie E. Salas - Frontend Developer" 
               className="relative z-10 h-full w-auto object-contain object-bottom drop-shadow-2xl"
               loading="eager"
             />

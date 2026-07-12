@@ -60,7 +60,7 @@ const Contact = () => {
             Get In <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Touch</span>
           </h2>
           <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-xl mx-auto leading-relaxed px-4">
-            Looking for internship opportunities. Feel free to reach out!
+            Looking for job opportunities. Feel free to reach out!
           </p>
         </div>
 
@@ -107,7 +107,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm sm:text-base md:text-lg">Available for Opportunities</p>
-                    <p className="text-gray-400 text-xs sm:text-sm">Open to internships & collaborations</p>
+                    <p className="text-gray-400 text-xs sm:text-sm">Open to job opportunities & collaborations</p>
                   </div>
                 </div>
                 <a
