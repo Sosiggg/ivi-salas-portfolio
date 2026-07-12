@@ -75,7 +75,7 @@ const About = () => {
                   <h3 className="text-base sm:text-lg md:text-xl font-urbanist font-bold text-navDark">
                     Ivi Susej Marie E. Salas
                   </h3>
-                  <p className="text-primary font-semibold text-xs sm:text-sm md:text-base mt-1">Aspiring Web Developer</p>
+                  <p className="text-primary font-semibold text-xs sm:text-sm md:text-base mt-1">Frontend Developer</p>
                 </div>
 
                 {/* Stats */}
